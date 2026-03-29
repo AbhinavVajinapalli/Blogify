@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { setFeed, setFilters, setLoading, setError } from '../features/blogs/blogsSlice';
@@ -17,26 +17,20 @@ const FeedPage = ({ detailBasePath = '/blogs', mode = 'all' }) => {
   const resolvedDetailBasePath =
     mode === 'site' && siteSlug ? `/site/${siteSlug}/posts` : detailBasePath;
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    setCurrentPage(1);
-    fetchBlogs(currentPage);
-  }, [filters, mode, siteSlug]);
-
-  const fetchBlogs = async (page = 1) => {
+  const fetchBlogs = useCallback(async () => {
     try {
       dispatch(setLoading(true));
       let data;
 
       if (mode === 'site' && siteSlug) {
         data = await blogService.getSiteBlogs(siteSlug, {
-          page,
+          page: currentPage,
           limit: 10,
         });
         setSiteMeta(data.site || null);
       } else {
         data = await blogService.getBlogs({
-          page,
+          page: currentPage,
           limit: 10,
           search: filters.search,
           tag: filters.tags.join(','),
@@ -45,13 +39,16 @@ const FeedPage = ({ detailBasePath = '/blogs', mode = 'all' }) => {
       }
 
       dispatch(setFeed(data));
-      setCurrentPage(page);
     } catch (err) {
       dispatch(setError(err.message));
     } finally {
       dispatch(setLoading(false));
     }
-  };
+  }, [currentPage, dispatch, filters.search, filters.tags, mode, siteSlug]);
+
+  useEffect(() => {
+    fetchBlogs();
+  }, [fetchBlogs]);
 
   const handleSearch = (query) => {
     dispatch(setFilters({ search: query }));
@@ -59,7 +56,7 @@ const FeedPage = ({ detailBasePath = '/blogs', mode = 'all' }) => {
   };
 
   const handlePageChange = (page) => {
-    fetchBlogs(page);
+    setCurrentPage(page);
   };
 
   return (
@@ -81,7 +78,7 @@ const FeedPage = ({ detailBasePath = '/blogs', mode = 'all' }) => {
               ))}
             </div>
             <Pagination
-              currentPage={pagination.currentPage}
+              currentPage={currentPage}
               total={pagination.total}
               limit={pagination.limit}
               onPageChange={handlePageChange}

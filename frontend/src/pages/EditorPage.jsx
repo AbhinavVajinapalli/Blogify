@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { addBlog, updateBlog, setOperationStatus, setError } from '../features/blogs/blogsSlice';
@@ -17,14 +17,7 @@ const EditorPage = () => {
   const [loading, setLoading] = useState(Boolean(id));
   const isDashboardRoute = location.pathname.startsWith('/dashboard');
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    if (id) {
-      fetchBlog();
-    }
-  }, [id]);
-
-  const fetchBlog = async () => {
+  const fetchBlog = useCallback(async () => {
     try {
       setLoading(true);
       const data = await blogService.getBlog(id);
@@ -34,7 +27,13 @@ const EditorPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, dispatch]);
+
+  useEffect(() => {
+    if (id) {
+      fetchBlog();
+    }
+  }, [id, fetchBlog]);
 
   const handleSubmit = async (data) => {
     try {

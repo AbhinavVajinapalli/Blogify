@@ -52,7 +52,18 @@ const BlogDetailsPage = () => {
   /**
    * Fetch blog and comments
    */
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fetchComments = useCallback(async (blogId) => {
+    try {
+      const data = await blogService.getComments(blogId, { page: 1, limit: 50 });
+      setComments(data?.comments || []);
+      setCommentError('');
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || 'Failed to load comments';
+      setCommentError(errorMsg);
+      console.error('Error fetching comments:', err);
+    }
+  }, []);
+
   const fetchBlog = useCallback(async () => {
     try {
       dispatch(setLoading(true));
@@ -66,23 +77,7 @@ const BlogDetailsPage = () => {
     } finally {
       dispatch(setLoading(false));
     }
-  }, [id, dispatch]);
-
-  /**
-   * Fetch comments for the blog
-   */
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fetchComments = useCallback(async (blogId) => {
-    try {
-      const data = await blogService.getComments(blogId, { page: 1, limit: 50 });
-      setComments(data?.comments || []);
-      setCommentError('');
-    } catch (err) {
-      const errorMsg = err.response?.data?.message || 'Failed to load comments';
-      setCommentError(errorMsg);
-      console.error('Error fetching comments:', err);
-    }
-  }, []);
+  }, [id, dispatch, fetchComments]);
 
   useEffect(() => {
     if (id) {
