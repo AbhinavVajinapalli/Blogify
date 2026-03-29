@@ -1,18 +1,20 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleLike } from '../../features/blogs/blogsSlice';
+import { updateBlog } from '../../features/blogs/blogsSlice';
 import { blogService } from '../../services/blogService';
-import '../styles/BlogCard.scss';
+import '../../styles/BlogCard.scss';
 
-const BlogCard = ({ blog }) => {
+const BlogCard = ({ blog, detailBasePath = '/blogs' }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const isLiked = blog.likes?.some((like) => like._id === user?.id);
+  const detailsLink = `${detailBasePath}/${blog._id}`;
 
   const handleLike = async () => {
     try {
-      await blogService.toggleLike(blog._id);
-      dispatch(toggleLike(blog._id));
+      const updatedBlog = await blogService.toggleLike(blog._id);
+      dispatch(updateBlog(updatedBlog));
     } catch (error) {
       console.error('Error liking blog:', error);
     }
@@ -23,7 +25,7 @@ const BlogCard = ({ blog }) => {
       {blog.imageUrl && <img src={blog.imageUrl} alt={blog.title} className="blog-image" />}
       
       <div className="blog-content">
-        <Link to={`/blogs/${blog._id}`}>
+        <Link to={detailsLink}>
           <h2 className="blog-title">{blog.title}</h2>
         </Link>
         
@@ -51,13 +53,33 @@ const BlogCard = ({ blog }) => {
           >
             ❤️ {blog.likes?.length || 0}
           </button>
-          <Link to={`/blogs/${blog._id}`} className="read-more">
+          <Link to={detailsLink} className="read-more">
             Read More →
           </Link>
         </div>
       </div>
     </div>
   );
+};
+
+BlogCard.propTypes = {
+  blog: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string,
+    author: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    createdAt: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    likes: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string,
+      })
+    ),
+  }).isRequired,
+  detailBasePath: PropTypes.string,
 };
 
 export default BlogCard;

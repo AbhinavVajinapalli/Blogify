@@ -1,0 +1,66 @@
+.dashboard-layout {
+  @apply grid min-h-screen grid-cols-[300px_1fr] bg-gray-100;
+
+  .dashboard-sidebar {
+    @apply flex flex-col gap-6 bg-gray-900 p-7 text-white;
+
+    .brand {
+      @apply text-2xl font-bold tracking-wide;
+    }
+
+    .dashboard-nav {
+      @apply flex flex-col gap-2;
+
+      a {
+        @apply rounded-lg px-3 py-2.5 font-medium text-gray-300;
+
+        &.active,
+        &:hover {
+          @apply bg-gray-800 text-white;
+        }
+      }
+    }
+
+    .logout-btn {
+      @apply mt-auto rounded-lg border-none bg-red-600 px-3 py-2.5 font-semibold text-white;
+    }
+  }
+
+  .dashboard-main {
+    @apply max-w-6xl px-7 py-7;
+
+    .dashboard-header {
+      @apply mb-5;
+
+      h1 {
+        @apply m-0;
+      }
+
+      p {
+        @apply m-1.5 mt-0 text-gray-600;
+      }
+    }
+
+    .dashboard-content {
+      @apply min-h-[70vh] rounded-2xl border border-gray-200 bg-white p-6 shadow-lg;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-layout {
+    @apply grid-cols-1;
+
+    .dashboard-sidebar {
+      @apply sticky top-0 z-50 flex-row items-center overflow-x-auto;
+
+      .dashboard-nav {
+        @apply flex-row;
+      }
+
+      .logout-btn {
+        @apply ml-auto mt-0;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import app from './app.js';
-import { connectDB } from './config/db.js';
+import { connectDB } from './db/atlas.js';
 import { getEnv } from './config/env.js';
 
 const PORT = getEnv('PORT') || 5000;

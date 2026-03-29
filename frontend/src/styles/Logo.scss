@@ -1,0 +1,21 @@
+.logo {
+  @apply inline-flex items-center gap-2.5;
+
+  .logo-mark {
+    @apply inline-flex h-7 w-7 items-center justify-center rounded bg-gradient-to-br from-sky-500 to-blue-600 text-sm font-black leading-none text-white shadow-lg;
+  }
+
+  .logo-text {
+    @apply font-bold tracking-wide;
+  }
+}
+
+.logo-light {
+  .logo-mark {
+    @apply shadow-none;
+  }
+
+  .logo-text {
+    @apply text-white;
+  }
+}

@@ -8,6 +8,11 @@ const seedDB = async () => {
   try {
     await connectDB();
 
+    const seedUserPassword = process.env.SEED_USER_PASSWORD;
+    if (!seedUserPassword) {
+      throw new Error('SEED_USER_PASSWORD is required to seed users securely');
+    }
+
     // Clear existing data
     await User.deleteMany({});
     await Blog.deleteMany({});
@@ -19,7 +24,7 @@ const seedDB = async () => {
     const user1 = await User.create({
       name: 'Alice Johnson',
       email: 'alice@example.com',
-      password: 'password123',
+      password: seedUserPassword,
       bio: 'Full-stack developer passionate about React and Node.js',
       profilePicture: 'https://via.placeholder.com/150/667eea/ffffff?text=Alice',
     });
@@ -27,7 +32,7 @@ const seedDB = async () => {
     const user2 = await User.create({
       name: 'Bob Smith',
       email: 'bob@example.com',
-      password: 'password123',
+      password: seedUserPassword,
       bio: 'Data scientist and AI enthusiast',
       profilePicture: 'https://via.placeholder.com/150/764ba2/ffffff?text=Bob',
     });
@@ -35,7 +40,7 @@ const seedDB = async () => {
     const user3 = await User.create({
       name: 'Carol Davis',
       email: 'carol@example.com',
-      password: 'password123',
+      password: seedUserPassword,
       bio: 'Design thinking and UX advocate',
       profilePicture: 'https://via.placeholder.com/150/f093fb/ffffff?text=Carol',
     });
@@ -121,9 +126,9 @@ const seedDB = async () => {
 
     console.log('\n=== Database Seeded Successfully ===');
     console.log('\nTest Accounts:');
-    console.log('User 1: alice@example.com / password123');
-    console.log('User 2: bob@example.com / password123');
-    console.log('User 3: carol@example.com / password123');
+    console.log('User 1: alice@example.com / (password from SEED_USER_PASSWORD)');
+    console.log('User 2: bob@example.com / (password from SEED_USER_PASSWORD)');
+    console.log('User 3: carol@example.com / (password from SEED_USER_PASSWORD)');
     console.log('\nSample blogs created with comments and likes.\n');
 
     await disconnectDB();

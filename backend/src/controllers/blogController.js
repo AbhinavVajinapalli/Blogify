@@ -16,7 +16,7 @@ export const createBlog = async (req, res, next) => {
       author: req.user.userId,
     });
 
-    const populatedBlog = await blog.populate('author', 'name email profilePicture');
+    const populatedBlog = await blog.populate('author', 'name email profilePicture siteName siteSlug');
 
     return successResponse(res, 201, populatedBlog);
   } catch (error) {
@@ -42,7 +42,7 @@ export const getBlogs = async (req, res, next) => {
     const skip = (page - 1) * limit;
 
     const blogs = await Blog.find(filter)
-      .populate('author', 'name email profilePicture bio')
+      .populate('author', 'name email profilePicture bio siteName siteSlug')
       .populate('likes', 'name email')
       .sort({ createdAt: -1 })
       .skip(skip)
@@ -72,7 +72,7 @@ export const getBlog = async (req, res, next) => {
       { $inc: { viewCount: 1 } },
       { new: true }
     )
-      .populate('author', 'name email profilePicture bio')
+      .populate('author', 'name email profilePicture bio siteName siteSlug')
       .populate('likes', 'name email')
       .populate('bookmarks', 'name email');
 
@@ -107,7 +107,7 @@ export const updateBlog = async (req, res, next) => {
     blog.imageUrl = imageUrl || blog.imageUrl;
 
     await blog.save();
-    const updatedBlog = await blog.populate('author', 'name email profilePicture');
+    const updatedBlog = await blog.populate('author', 'name email profilePicture siteName siteSlug');
 
     return successResponse(res, 200, updatedBlog, 'Blog updated successfully');
   } catch (error) {
@@ -158,7 +158,7 @@ export const toggleLike = async (req, res, next) => {
     }
 
     await blog.save();
-    const updatedBlog = await blog.populate('author', 'name email profilePicture');
+    const updatedBlog = await blog.populate('author', 'name email profilePicture siteName siteSlug');
 
     return successResponse(res, 200, updatedBlog);
   } catch (error) {
@@ -185,7 +185,7 @@ export const toggleBookmark = async (req, res, next) => {
     }
 
     await blog.save();
-    const updatedBlog = await blog.populate('author', 'name email profilePicture');
+    const updatedBlog = await blog.populate('author', 'name email profilePicture siteName siteSlug');
 
     return successResponse(res, 200, updatedBlog);
   } catch (error) {
@@ -209,7 +209,7 @@ export const addComment = async (req, res, next) => {
       blog: req.params.id,
     });
 
-    const populatedComment = await comment.populate('author', 'name email profilePicture');
+    const populatedComment = await comment.populate('author', 'name email profilePicture siteName siteSlug');
 
     return successResponse(res, 201, populatedComment, 'Comment added successfully');
   } catch (error) {
@@ -230,7 +230,7 @@ export const getComments = async (req, res, next) => {
     const skip = (page - 1) * limit;
 
     const comments = await Comment.find({ blog: req.params.id })
-      .populate('author', 'name email profilePicture')
+      .populate('author', 'name email profilePicture siteName siteSlug')
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(parseInt(limit));

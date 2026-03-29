@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { addBlog, updateBlog, setOperationStatus, setError } from '../features/blogs/blogsSlice';
 import { blogService } from '../services/blogService';
 import BlogForm from '../components/blog/BlogForm';
@@ -8,12 +8,16 @@ import '../styles/pages/EditorPage.scss';
 
 const EditorPage = () => {
   const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // eslint-disable-next-line no-unused-vars
   const { selectedBlog, operationStatus, error } = useSelector((state) => state.blogs);
   const [initialData, setInitialData] = useState(null);
-  const [loading, setLoading] = useState(!!id);
+  const [loading, setLoading] = useState(Boolean(id));
+  const isDashboardRoute = location.pathname.startsWith('/dashboard');
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (id) {
       fetchBlog();
@@ -44,7 +48,7 @@ const EditorPage = () => {
         dispatch(addBlog(created));
       }
 
-      navigate('/');
+      navigate(isDashboardRoute ? '/dashboard/posts' : '/');
     } catch (err) {
       dispatch(setError(err.message));
     } finally {

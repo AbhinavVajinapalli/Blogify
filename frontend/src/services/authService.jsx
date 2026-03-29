@@ -9,6 +9,10 @@ export const authService = {
     return apiClient.post('/auth/login', { email, password });
   },
 
+  loginWithGoogle: async (credential) => {
+    return apiClient.post('/auth/google', { credential });
+  },
+
   getCurrentUser: async () => {
     return apiClient.get('/auth/me');
   },

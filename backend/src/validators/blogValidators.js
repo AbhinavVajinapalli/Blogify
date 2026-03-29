@@ -1,16 +1,37 @@
-import { body, query, param, validationResult } from 'express-validator';
+import { body, query, validationResult } from 'express-validator';
 import { ApiError } from '../utils/ApiError.js';
 
-export const validateAuth = [
+export const validateSignup = [
+  body('name')
+    .trim()
+    .isLength({ min: 2 })
+    .withMessage('Name must be at least 2 characters'),
+  body('email').isEmail().normalizeEmail().withMessage('Valid email is required'),
+  body('password')
+    .isStrongPassword({
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    })
+    .withMessage(
+      'Password must be at least 8 characters and include uppercase, lowercase, number, and symbol'
+    ),
+];
+
+export const validateLogin = [
   body('email').isEmail().normalizeEmail().withMessage('Valid email is required'),
   body('password')
     .isLength({ min: 6 })
     .withMessage('Password must be at least 6 characters'),
-  body('name')
-    .trim()
-    .isLength({ min: 2 })
-    .withMessage('Name must be at least 2 characters')
-    .if(() => body('name').exists()),
+];
+
+export const validateGoogleAuth = [
+  body('credential')
+    .isString()
+    .notEmpty()
+    .withMessage('Google credential is required'),
 ];
 
 export const validateBlog = [
@@ -26,7 +47,7 @@ export const validateBlog = [
     .isArray({ max: 10 })
     .withMessage('Maximum 10 tags allowed'),
   body('imageUrl')
-    .optional()
+    .optional({ checkFalsy: true })
     .isURL()
     .withMessage('Invalid image URL'),
 ];

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../styles/BlogForm.scss';
+import '../../styles/BlogForm.scss';
 
 const BlogForm = ({ initialData = {}, onSubmit, isLoading = false }) => {
   const [formData, setFormData] = useState({
@@ -52,6 +52,11 @@ const BlogForm = ({ initialData = {}, onSubmit, isLoading = false }) => {
         .map((tag) => tag.trim())
         .filter((tag) => tag),
     };
+
+    // Do not send empty image URL; backend treats blank string as invalid URL.
+    if (!submitData.imageUrl?.trim()) {
+      delete submitData.imageUrl;
+    }
 
     onSubmit(submitData);
   };

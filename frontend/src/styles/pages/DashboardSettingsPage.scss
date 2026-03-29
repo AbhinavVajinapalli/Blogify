@@ -1,0 +1,27 @@
+.dashboard-settings-page {
+  h2 {
+    @apply mt-0;
+  }
+
+  .info-banner {
+    @apply mb-4 rounded bg-green-100 px-3 py-2.5 text-green-800;
+  }
+
+  .settings-form {
+    @apply grid max-w-2xl gap-2.5;
+
+    input,
+    textarea {
+      @apply rounded border border-blue-300 px-3 py-2.5;
+      font: inherit;
+    }
+
+    small {
+      @apply mt-1 text-slate-600;
+    }
+
+    button {
+      @apply mt-2 w-fit;
+    }
+  }
+}

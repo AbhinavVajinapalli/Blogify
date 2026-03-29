@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import '../styles/Pagination.scss';
+import '../../styles/Pagination.scss';
 
 const Pagination = ({ currentPage, total, limit, onPageChange }) => {
   const pages = Math.ceil(total / limit);

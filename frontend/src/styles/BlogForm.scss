@@ -1,69 +1,37 @@
 .blog-form {
-  background: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  @apply rounded-lg bg-white p-7 shadow-md;
 
   .form-group {
-    margin-bottom: 20px;
+    @apply mb-5;
 
     label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #1a1a1a;
+      @apply mb-2 block font-semibold text-gray-900;
     }
 
     input,
     textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-family: inherit;
-      font-size: 14px;
+      @apply w-full rounded border border-gray-300 px-3 py-3 text-sm;
+      font: inherit;
 
       &:focus {
-        outline: none;
-        border-color: #0070f3;
-        box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+        @apply border-blue-600 outline-none ring-2 ring-blue-100;
       }
 
       &.error {
-        border-color: #ff6b6b;
+        @apply border-red-500;
       }
     }
 
     textarea {
-      resize: vertical;
+      @apply resize-y;
     }
 
     .error-message {
-      color: #ff6b6b;
-      font-size: 12px;
-      margin-top: 4px;
-      display: block;
+      @apply mt-1 block text-xs text-red-600;
     }
   }
 
   button[type='submit'] {
-    width: 100%;
-    padding: 12px;
-    background: #0070f3;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover:not(:disabled) {
-      background: #0060d4;
-    }
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+    @apply w-full rounded border-none bg-blue-600 px-3 py-3 font-semibold text-white transition-all duration-300 hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60;
   }
 }

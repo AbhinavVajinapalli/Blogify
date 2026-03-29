@@ -1,13 +1,14 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/auth/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/Navbar.scss';
+import Logo from '../common/Logo';
+import '../../styles/Navbar.scss';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const brandTarget = isAuthenticated ? '/dashboard/posts' : '/';
 
   const handleLogout = () => {
     dispatch(logout());
@@ -17,8 +18,8 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="navbar-brand">
-          📝 BlogHub
+        <Link to={brandTarget} className="navbar-brand">
+          <Logo text="Blogify" />
         </Link>
 
         <div className="navbar-center">
@@ -28,8 +29,8 @@ const Navbar = () => {
         <div className="navbar-right">
           {isAuthenticated ? (
             <>
-              <Link to="/blogs/new" className="btn btn-primary">
-                ✍️ Write
+              <Link to="/dashboard/posts" className="btn btn-primary">
+                Dashboard
               </Link>
               <Link to={`/profile/${user?.id}`} className="user-link">
                 {user?.name}

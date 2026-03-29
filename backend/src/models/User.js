@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, 'Please provide a password'],
-      minlength: [6, 'Password must be at least 6 characters'],
+      minlength: [8, 'Password must be at least 8 characters'],
       select: false,
     },
     bio: {
@@ -33,6 +33,26 @@ const userSchema = new mongoose.Schema(
     profilePicture: {
       type: String,
       default: null,
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+      default: null,
+    },
+    siteName: {
+      type: String,
+      trim: true,
+      default: null,
+      maxlength: [80, 'Site name must not exceed 80 characters'],
+    },
+    siteSlug: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      unique: true,
+      sparse: true,
+      match: [/^[a-z0-9-]+$/, 'Site slug can only contain lowercase letters, numbers, and hyphens'],
     },
   },
   {

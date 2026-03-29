@@ -1,6 +1,6 @@
 import { ApiError } from '../utils/ApiError.js';
 
-export const globalErrorHandler = (err, req, res, next) => {
+export const globalErrorHandler = (err, req, res, _next) => {
   let error = err;
 
   // Mongoose validation error

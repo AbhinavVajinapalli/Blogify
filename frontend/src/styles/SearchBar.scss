@@ -1,34 +1,15 @@
 .search-bar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 30px;
+  @apply mb-7 flex gap-2.5;
 
   .search-input {
-    flex: 1;
-    padding: 12px 16px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 14px;
+    @apply flex-1 rounded border border-gray-300 px-4 py-3 text-sm;
 
     &:focus {
-      outline: none;
-      border-color: #0070f3;
-      box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+      @apply border-blue-600 outline-none ring-2 ring-blue-100;
     }
   }
 
   .search-btn {
-    padding: 12px 24px;
-    background: #0070f3;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background: #0060d4;
-    }
+    @apply rounded border-none bg-blue-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-blue-700;
   }
 }

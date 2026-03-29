@@ -22,7 +22,7 @@ const blogsSlice = createSlice({
   initialState,
   reducers: {
     setFeed(state, action) {
-      state.feed = action.payload.blogs;
+      state.feed = action.payload?.blogs || [];
       state.pagination = action.payload.pagination || state.pagination;
     },
     setSelectedBlog(state, action) {
@@ -47,7 +47,7 @@ const blogsSlice = createSlice({
       }
     },
     toggleLike(state, action) {
-      const blog = state.feed.find((b) => b._id === action.payload);
+      const blog = state.feed.find((b) => b._id === action.payload.blogId);
       if (blog) {
         blog.likes = action.payload.likes;
       }

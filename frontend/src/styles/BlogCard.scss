@@ -1,99 +1,51 @@
 .blog-card {
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  }
+  @apply overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-1;
 
   .blog-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+    @apply h-48 w-full object-cover;
   }
 
   .blog-content {
-    padding: 20px;
+    @apply p-5;
   }
 
   .blog-title {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #1a1a1a;
-
-    &:hover {
-      color: #0070f3;
-    }
+    @apply mb-2.5 text-lg text-gray-900 hover:text-blue-600;
   }
 
   .blog-excerpt {
-    color: #666;
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 15px;
+    @apply mb-3 line-clamp-3 text-sm text-gray-600;
   }
 
   .blog-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    color: #999;
-    margin-bottom: 10px;
+    @apply mb-2.5 flex items-center justify-between text-xs text-gray-500;
 
     .author-name {
-      font-weight: 600;
-      color: #1a1a1a;
+      @apply font-semibold text-gray-900;
     }
   }
 
   .blog-tags {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 15px;
+    @apply mb-3 flex flex-wrap gap-2;
 
     .tag {
-      background: #f0f0f0;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      color: #666;
+      @apply rounded bg-gray-100 px-2 py-1 text-xs text-gray-600;
     }
   }
 
   .blog-actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
+    @apply flex gap-2.5;
 
     .like-btn {
-      background: none;
-      border: 1px solid #ddd;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      @apply border border-gray-300 rounded px-3 py-2 text-sm transition-all duration-300 hover:border-red-500;
 
       &.liked {
-        background: #ffe0e0;
-        border-color: #ff6b6b;
-        color: #ff6b6b;
-      }
-
-      &:hover {
-        border-color: #ff6b6b;
+        @apply border-red-500 bg-red-100 text-red-600;
       }
     }
 
     .read-more {
-      color: #0070f3;
-      font-weight: 600;
-      margin-left: auto;
+      @apply ml-auto font-semibold text-blue-600;
     }
   }
 }

@@ -12,8 +12,20 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
+const allowedOrigins = (getEnv('CORS_ORIGIN') || 'http://localhost:3000,http://localhost:3001')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 const corsOptions = {
-  origin: getEnv('CORS_ORIGIN') || 'http://localhost:3000',
+  origin: (origin, callback) => {
+    // Allow non-browser clients (no Origin header) and configured browser origins.
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+      return;
+    }
+    callback(new Error('CORS not allowed for this origin'));
+  },
   credentials: true,
   optionsSuccessStatus: 200,
 };

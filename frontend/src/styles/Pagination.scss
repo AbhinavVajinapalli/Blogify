@@ -1,39 +1,15 @@
 .pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 40px;
-  flex-wrap: wrap;
+  @apply mt-10 flex flex-wrap items-center justify-center gap-2.5;
 
   button {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    background: white;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
-
-    &:hover:not(:disabled) {
-      background: #f0f0f0;
-      border-color: #0070f3;
-  }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    @apply rounded border border-gray-300 bg-white px-3 py-2 font-medium transition-all duration-300 hover:border-blue-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50;
 
     &.active {
-      background: #0070f3;
-      color: white;
-      border-color: #0070f3;
+      @apply border-blue-600 bg-blue-600 text-white;
     }
   }
 
   .page-numbers {
-    display: flex;
-    gap: 5px;
+    @apply flex gap-1;
   }
 }

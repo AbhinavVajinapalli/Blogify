@@ -52,4 +52,12 @@ export const blogService = {
   getUserBlogs: async (userId, params) => {
     return apiClient.get(`/profiles/${userId}/blogs`, { params });
   },
+
+  getSiteProfile: async (siteSlug) => {
+    return apiClient.get(`/profiles/site/${siteSlug}`);
+  },
+
+  getSiteBlogs: async (siteSlug, params) => {
+    return apiClient.get(`/profiles/site/${siteSlug}/blogs`, { params });
+  },
 };

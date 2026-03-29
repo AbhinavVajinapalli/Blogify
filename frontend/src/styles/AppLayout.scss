@@ -1,11 +1,15 @@
 .app-layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  @apply flex min-h-screen flex-col;
 
   .main-content {
-    flex: 1;
-    padding: 40px 0;
-    background: #f5f5f5;
+    @apply flex-1 bg-gradient-to-b from-blue-50 to-gray-50 px-0 py-12;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-layout {
+    .main-content {
+      @apply py-7;
+    }
   }
 }
