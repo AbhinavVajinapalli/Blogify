@@ -8,19 +8,22 @@ import profileRoutes from './routes/profileRoutes.js';
 
 const app = express();
 
+const normalizeOrigin = (origin = '') => origin.trim().replace(/\/+$/, '');
+
 // Middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 const allowedOrigins = (getEnv('CORS_ORIGIN') || 'http://localhost:3000,http://localhost:3001')
   .split(',')
-  .map((origin) => origin.trim())
+  .map((origin) => normalizeOrigin(origin))
   .filter(Boolean);
 
 const corsOptions = {
   origin: (origin, callback) => {
+    const normalizedOrigin = normalizeOrigin(origin || '');
     // Allow non-browser clients (no Origin header) and configured browser origins.
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.includes(normalizedOrigin)) {
       callback(null, true);
       return;
     }
