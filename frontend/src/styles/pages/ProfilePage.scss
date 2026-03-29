@@ -1,0 +1,44 @@
+.profile-page {
+  .container {
+    @apply mx-auto max-w-4xl px-5;
+  }
+
+  .profile-header {
+    @apply mb-10 flex gap-7 rounded-lg bg-white p-10 align-baseline;
+
+    .profile-picture {
+      @apply h-36 w-36 flex-shrink-0 rounded-full object-cover;
+    }
+
+    .profile-info {
+      @apply flex-1;
+
+      h1 {
+        @apply mb-2;
+      }
+
+      .profile-email {
+        @apply mb-2.5 text-gray-600;
+      }
+
+      .profile-bio {
+        @apply leading-relaxed text-gray-800;
+      }
+    }
+  }
+
+  .profile-blogs {
+    h2 {
+      @apply mb-7 text-gray-900;
+    }
+
+    .blogs-grid {
+      @apply mb-10 grid gap-5;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
+    .no-blogs {
+      @apply px-5 py-16 text-center text-lg text-gray-400;
+    }
+  }
+}

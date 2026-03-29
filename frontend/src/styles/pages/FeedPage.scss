@@ -1,0 +1,31 @@
+.feed-page {
+  .container {
+    @apply mx-auto max-w-6xl px-7;
+  }
+
+  h1 {
+    @apply mb-7 text-gray-900;
+  }
+
+  .no-blogs {
+    @apply px-5 py-16 text-center text-lg text-gray-400;
+  }
+
+  .blogs-grid {
+    @apply mb-10 grid gap-6;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .feed-page {
+    .container {
+      @apply px-4;
+    }
+
+    .blogs-grid {
+      @apply gap-4;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.pagination {
+  @apply mt-10 flex flex-wrap items-center justify-center gap-2.5;
+
+  button {
+    @apply rounded border border-gray-300 bg-white px-3 py-2 font-medium transition-all duration-300 hover:border-blue-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50;
+
+    &.active {
+      @apply border-blue-600 bg-blue-600 text-white;
+    }
+  }
+
+  .page-numbers {
+    @apply flex gap-1;
+  }
+}

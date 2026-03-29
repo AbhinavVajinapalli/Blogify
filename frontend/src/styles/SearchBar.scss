@@ -1,0 +1,15 @@
+.search-bar {
+  @apply mb-7 flex gap-2.5;
+
+  .search-input {
+    @apply flex-1 rounded border border-gray-300 px-4 py-3 text-sm;
+
+    &:focus {
+      @apply border-blue-600 outline-none ring-2 ring-blue-100;
+    }
+  }
+
+  .search-btn {
+    @apply rounded border-none bg-blue-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-blue-700;
+  }
+}

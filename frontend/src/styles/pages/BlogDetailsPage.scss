@@ -1,0 +1,130 @@
+.blog-details-page {
+  .container {
+    @apply mx-auto max-w-3xl px-5;
+  }
+
+  .blog-hero {
+    @apply mb-10 w-full rounded-lg object-cover h-96;
+  }
+
+  .blog-article {
+    @apply mb-10 rounded-lg bg-white p-10;
+
+    h1 {
+      @apply mb-5 text-3xl leading-snug;
+    }
+
+    .blog-meta {
+      @apply mb-5 flex items-center border-b border-gray-200 pb-5;
+
+      .author-info {
+        @apply flex flex-col gap-1;
+
+        .author-name {
+          @apply font-semibold text-gray-900;
+        }
+
+        .date {
+          @apply text-xs text-gray-500;
+        }
+      }
+
+      .blog-actions {
+        @apply ml-auto flex gap-2.5;
+
+        .btn {
+          @apply px-4 py-2 text-sm;
+        }
+
+        .btn-danger {
+          @apply bg-red-600 text-white hover:bg-red-700;
+        }
+      }
+    }
+
+    .blog-tags {
+      @apply mb-5 flex flex-wrap gap-2.5;
+
+      .tag {
+        @apply rounded bg-gray-100 px-3 py-1.5 text-xs text-gray-600;
+      }
+    }
+
+    .blog-text {
+      @apply mb-7 break-words leading-relaxed text-gray-800;
+
+      p {
+        @apply mb-3;
+      }
+    }
+
+    .blog-stats {
+      @apply border-t border-gray-200 pt-5 text-gray-600;
+      display: flex;
+      gap: 30px;
+    }
+  }
+
+  .comments-section {
+    @apply rounded-lg bg-white p-10;
+
+    h2 {
+      @apply mb-7;
+    }
+
+    .comment-signin {
+      @apply mb-7 rounded border border-blue-200 bg-blue-50 px-4 py-3 text-center text-sm text-blue-700;
+
+      a {
+        @apply font-semibold text-blue-600 underline hover:text-blue-800;
+      }
+    }
+
+    .comment-form {
+      @apply mb-7;
+
+      textarea {
+        @apply mb-2.5 w-full rounded border border-gray-300 px-3 py-3 text-sm;
+        font: inherit;
+
+        &:focus {
+          @apply border-blue-600 outline-none ring-2 ring-blue-100;
+        }
+
+        &:disabled {
+          @apply cursor-not-allowed bg-gray-100 text-gray-500;
+        }
+      }
+
+      .error {
+        @apply mb-2.5 rounded bg-red-100 px-3 py-2.5 text-sm text-red-600;
+      }
+
+      button {
+        @apply rounded border-none bg-blue-600 px-4 py-2.5 font-medium text-white transition-all duration-200 hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400;
+      }
+    }
+
+    .comments-list {
+      .comment {
+        @apply mb-3 rounded bg-gray-50 p-3;
+
+        .comment-author {
+          @apply mb-2 font-semibold text-gray-900;
+        }
+
+        .comment-text {
+          @apply mb-2 leading-relaxed text-gray-800;
+        }
+
+        .comment-date {
+          @apply text-xs text-gray-500;
+        }
+      }
+
+      .no-comments {
+        @apply px-5 py-5 text-center text-gray-500;
+      }
+    }
+  }
+}

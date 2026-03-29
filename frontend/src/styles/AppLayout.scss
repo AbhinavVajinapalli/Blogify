@@ -1,0 +1,15 @@
+.app-layout {
+  @apply flex min-h-screen flex-col;
+
+  .main-content {
+    @apply flex-1 bg-gradient-to-b from-blue-50 to-gray-50 px-0 py-12;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-layout {
+    .main-content {
+      @apply py-7;
+    }
+  }
+}

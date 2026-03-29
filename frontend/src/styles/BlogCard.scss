@@ -1,0 +1,51 @@
+.blog-card {
+  @apply overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-1;
+
+  .blog-image {
+    @apply h-48 w-full object-cover;
+  }
+
+  .blog-content {
+    @apply p-5;
+  }
+
+  .blog-title {
+    @apply mb-2.5 text-lg text-gray-900 hover:text-blue-600;
+  }
+
+  .blog-excerpt {
+    @apply mb-3 line-clamp-3 text-sm text-gray-600;
+  }
+
+  .blog-meta {
+    @apply mb-2.5 flex items-center justify-between text-xs text-gray-500;
+
+    .author-name {
+      @apply font-semibold text-gray-900;
+    }
+  }
+
+  .blog-tags {
+    @apply mb-3 flex flex-wrap gap-2;
+
+    .tag {
+      @apply rounded bg-gray-100 px-2 py-1 text-xs text-gray-600;
+    }
+  }
+
+  .blog-actions {
+    @apply flex gap-2.5;
+
+    .like-btn {
+      @apply border border-gray-300 rounded px-3 py-2 text-sm transition-all duration-300 hover:border-red-500;
+
+      &.liked {
+        @apply border-red-500 bg-red-100 text-red-600;
+      }
+    }
+
+    .read-more {
+      @apply ml-auto font-semibold text-blue-600;
+    }
+  }
+}
