@@ -1,363 +1,226 @@
-# BlogHub - Full-Stack Blog Platform
+# Blogify
 
-A production-ready full-stack blog platform built with React, Redux Toolkit, Node.js/Express, MongoDB, and JWT authentication. Features include blog CRUD operations, user authentication, profiles, search, pagination, and interactive likes/bookmarks/comments.
+Blogify is a full-stack blog platform built with the MERN stack (MongoDB, Express, React, Node.js) with optional Flutter mobile support.
 
-## Table of Contents
+It helps creators and students publish content quickly with authentication, dashboard management, engagement features, and public profile-based blog pages.
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Setup Instructions](#setup-instructions)
-  - [Environment Variables](#environment-variables)
-- [API Documentation](#api-documentation)
-- [Architecture Overview](#architecture-overview)
-- [Deployment](#deployment)
-- [AI Usage & Disclosure](#ai-usage--disclosure)
-- [Git Commit Strategy](#git-commit-strategy)
+## 1. Project Description
 
-## Features
+Blogify solves a common problem for beginner and intermediate developers: building a complete publishing platform with real authentication, CRUD, user profiles, and production deployment.
 
-### Mandatory ✅
-- **User Authentication**: Secure signup/login with JWT tokens
-- **Protected Routes**: Authenticated users only for write operations
-- **Blog CRUD**: Create, read, update, delete blog posts
-- **Author Profiles**: User profile with bio and authored blogs list
-- **Responsive Design**: Mobile-friendly SCSS styling
+It is designed to be:
+- Easy to understand for students.
+- Professional enough for interviews and portfolio review.
+- Extendable for real production features.
 
-### Bonus Features ✅
-- **Search**: Search blogs by title and tags (text-indexed queries)
-- **Pagination**: Efficient pagination for feeds and profiles
-- **Likes/Bookmarks**: Interactive like and bookmark functionality
-- **Comments System**: Full comment CRUD on blog posts
-- **User Profiles**: Author bio, profile picture, published blog count
+## 2. Features
 
-## Tech Stack
+- Authentication with email/password and JWT.
+- Google OAuth login/signup.
+- Protected dashboard routes.
+- Blog CRUD (create, read, update, delete).
+- Likes, comments, and bookmarks.
+- Author profile pages.
+- Public site pages by user slug.
+- Search and pagination on feeds.
+- Settings page with profile editing.
+- Permanent account deletion flow.
+
+## 3. Tech Stack
 
 ### Frontend
-- **React 18** - UI framework
-- **Redux Toolkit** - State management
-- **React Router v6** - Navigation
-- **Axios** - API client
-- **SCSS** - Styling (modular components)
-- **Vite** - Build tool
+- React 18
+- Redux Toolkit
+- React Router v6
+- Axios
+- SCSS + Tailwind utilities
 
 ### Backend
-- **Node.js** - Runtime
-- **Express.js** - Web framework
-- **MongoDB** - Document database
-- **Mongoose** - ODM
-- **JWT (jsonwebtoken)** - Authentication
-- **bcryptjs** - Password hashing
-- **express-validator** - Request validation
+- Node.js
+- Express
+- Mongoose
+- JWT (jsonwebtoken)
+- bcryptjs
+- express-validator
 
-### Deployment
-- **Render** - Backend + Frontend hosting
-- **MongoDB Atlas** - Cloud database
+### Database
+- MongoDB Atlas
 
-## Project Structure
+### Tools and Platform
+- ESLint
+- Prettier
+- npm scripts
+- Vercel (frontend deployment)
+- Render (backend deployment)
 
-```
+## 4. Architecture Overview
+
+Blogify follows a clean client-server architecture:
+
+1. React frontend handles UI and user interaction.
+2. Frontend service layer calls Express REST APIs.
+3. Express routes call controller logic.
+4. Controllers read/write data via Mongoose models.
+5. MongoDB stores users, blogs, comments, and engagement data.
+
+Security and consistency are handled through middleware:
+- JWT auth middleware for protected routes.
+- Request validation middleware.
+- Global error handler.
+- CORS allowlist configuration.
+
+## 5. Project Structure
+
+```text
 blog-platform/
-├── frontend/
-│   ├── src/
-│   │   ├── app/
-│   │   │   └── store.js                 # Redux store config
-│   │   ├── features/
-│   │   │   ├── auth/
-│   │   │   │   └── authSlice.js         # Auth state slice
-│   │   │   ├── blogs/
-│   │   │   │   └── blogsSlice.js        # Blogs state slice
-│   │   │   └── profile/
-│   │   │       └── profileSlice.js      # Profile state slice
-│   │   ├── services/
-│   │   │   ├── apiClient.js             # Axios instance + interceptors
-│   │   │   ├── authService.js           # Auth API calls
-│   │   │   └── blogService.js           # Blog/Profile API calls
-│   │   ├── pages/
-│   │   │   ├── LoginPage.jsx
-│   │   │   ├── SignupPage.jsx
-│   │   │   ├── FeedPage.jsx
-│   │   │   ├── BlogDetailsPage.jsx
-│   │   │   ├── EditorPage.jsx
-│   │   │   └── ProfilePage.jsx
-│   │   ├── components/
-│   │   │   ├── layout/
-│   │   │   │   ├── Navbar.jsx
-│   │   │   │   └── AppLayout.jsx
-│   │   │   ├── common/
-│   │   │   │   ├── ProtectedRoute.jsx
-│   │   │   │   └── Pagination.jsx
-│   │   │   └── blog/
-│   │   │       ├── BlogCard.jsx
-│   │   │       ├── BlogForm.jsx
-│   │   │       └── SearchBar.jsx
-│   │   ├── styles/
-│   │   │   ├── index.scss               # Global styles
-│   │   │   ├── pages/
-│   │   │   └── components/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── index.html
-│   ├── vite.config.js
-│   ├── package.json
-│   └── .env.example
-│
-├── backend/
-│   ├── src/
-│   │   ├── config/
-│   │   │   ├── db.js                    # MongoDB connection
-│   │   │   └── env.js                   # Environment config
-│   │   ├── models/
-│   │   │   ├── User.js                  # User schema
-│   │   │   ├── Blog.js                  # Blog schema
-│   │   │   └── Comment.js               # Comment schema
-│   │   ├── controllers/
-│   │   │   ├── authController.js        # Auth logic
-│   │   │   ├── blogController.js        # Blog logic
-│   │   │   └── profileController.js     # Profile logic
-│   │   ├── routes/
-│   │   │   ├── authRoutes.js
-│   │   │   ├── blogRoutes.js
-│   │   │   └── profileRoutes.js
-│   │   ├── middleware/
-│   │   │   ├── authMiddleware.js        # JWT verification
-│   │   │   ├── errorMiddleware.js       # Error handling
-│   │   │   └── validateMiddleware.js    # Input validation
-│   │   ├── validators/
-│   │   │   └── blogValidators.js        # Validation rules
-│   │   ├── utils/
-│   │   │   ├── ApiError.js
-│   │   │   └── ApiResponse.js
-│   │   ├── app.js                       # Express app setup
-│   │   └── server.js                    # Server bootstrap
-│   ├── package.json
-│   └── .env.example
+   backend/
+      src/
+         controllers/
+         middleware/
+         models/
+         routes/
+         validators/
+         utils/
+         app.js
+         server.js
+      scripts/
+      package.json
+      .env.example
 
-├── README.md
-└── .gitignore
+   frontend/
+      src/
+         components/
+         pages/
+         services/
+         features/
+         styles/
+         App.jsx
+         index.jsx
+      public/
+      package.json
+      .env.example
+
+   mobile/
+      lib/
+         features/
+         models/
+         widgets/
+
+   docs/
+      api-overview.md
+      architecture.md
+
+   README.md
+   .gitignore
 ```
 
-## Getting Started
+## 6. Local Setup Instructions
 
 ### Prerequisites
+- Node.js 18+
+- npm
+- MongoDB Atlas connection string
 
-- **Node.js** (v16+)
-- **npm** or **yarn**
-- **MongoDB Atlas** account (or local MongoDB)
-- **Git**
-
-### Setup Instructions
-
-#### 1. Clone Repository
-```bash
-git clone https://github.com/YOUR_USERNAME/blog-platform.git
-cd blog-platform
-```
-
-#### 2. Backend Setup
+### Backend Setup
 
 ```bash
 cd backend
-
-# Install dependencies
 npm install
-
-# Create .env file
 cp .env.example .env
-
-# Edit .env with your values (see Environment Variables below)
-
-# Start development server
 npm run dev
 ```
 
-#### 3. Frontend Setup
+Backend runs on `http://localhost:5000`.
+
+### Frontend Setup
 
 ```bash
-cd ../frontend
-
-# Install dependencies
+cd frontend
 npm install
-
-# Create .env file
 cp .env.example .env
-
-# Edit .env (set VITE_API_BASE_URL to your backend URL)
-
-# Start development server
-npm run dev
+npm start
 ```
 
-The app will be available at `http://localhost:3000` (frontend) and `http://localhost:5000/api` (backend).
+Frontend runs on `http://localhost:3000`.
 
-### Environment Variables
+## 7. Deployment Links
 
-#### Backend (.env)
-```
-NODE_ENV=development
-PORT=5000
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/blog_db
-JWT_SECRET=your_super_secret_key_here
-JWT_EXPIRES_IN=7d
-CORS_ORIGIN=http://localhost:3000
-```
+- Frontend URL: `https://blogify-inky-pi.vercel.app/`
+- Backend API URL: `https://blogify-k4qm.onrender.com/api`
 
-#### Frontend (.env)
-```
-VITE_API_BASE_URL=http://localhost:5000/api
-```
+## 8. API Overview
 
-## API Documentation
-
-### Authentication
-
-**POST /api/auth/signup**
-- Register new user
-- Body: `{ name, email, password }`
-- Returns: `{ user, token }`
-
-**POST /api/auth/login**
-- Login user
-- Body: `{ email, password }`
-- Returns: `{ user, token }`
-
-**GET /api/auth/me** (Protected)
-- Get current user
-- Headers: `Authorization: Bearer <token>`
-- Returns: `{ user }`
-
-**PATCH /api/auth/me** (Protected)
-- Update user profile
-- Headers: `Authorization: Bearer <token>`
-- Body: `{ name, bio, profilePicture }`
-- Returns: `{ user }`
+### Auth
+- `POST /api/auth/signup`
+- `POST /api/auth/login`
+- `POST /api/auth/google`
+- `GET /api/auth/me`
+- `PATCH /api/auth/me`
+- `DELETE /api/auth/me`
 
 ### Blogs
-
-**POST /api/blogs** (Protected)
-- Create new blog
-- Body: `{ title, content, tags[], imageUrl }`
-- Returns: `{ blog }`
-
-**GET /api/blogs**
-- Get all blogs with pagination/search
-- Query: `?page=1&limit=10&search=query&tag=tag1,tag2`
-- Returns: `{ blogs[], pagination }`
-
-**GET /api/blogs/:id**
-- Get single blog
-- Returns: `{ blog }`
-
-**PATCH /api/blogs/:id** (Protected)
-- Update blog (owner only)
-- Body: `{ title, content, tags[], imageUrl }`
-- Returns: `{ blog }`
-
-**DELETE /api/blogs/:id** (Protected)
-- Delete blog (owner only)
-- Returns: `{ message }`
-
-**PATCH /api/blogs/:id/like** (Protected)
-- Toggle like on blog
-- Returns: `{ blog }`
-
-**PATCH /api/blogs/:id/bookmark** (Protected)
-- Toggle bookmark on blog
-- Returns: `{ blog }`
+- `POST /api/blogs`
+- `GET /api/blogs`
+- `GET /api/blogs/:id`
+- `PATCH /api/blogs/:id`
+- `DELETE /api/blogs/:id`
+- `PATCH /api/blogs/:id/like`
+- `PATCH /api/blogs/:id/bookmark`
 
 ### Comments
-
-**POST /api/blogs/:id/comments** (Protected)
-- Add comment to blog
-- Body: `{ content }`
-- Returns: `{ comment }`
-
-**GET /api/blogs/:id/comments**
-- Get blog comments
-- Query: `?page=1&limit=10`
-- Returns: `{ comments[], pagination }`
-
-**DELETE /api/blogs/:blogId/comments/:commentId** (Protected)
-- Delete comment (author or blog owner only)
-- Returns: `{ message }`
+- `POST /api/blogs/:id/comments`
+- `GET /api/blogs/:id/comments`
+- `DELETE /api/blogs/:blogId/comments/:commentId`
 
 ### Profiles
+- `GET /api/profiles/:userId`
+- `GET /api/profiles/:userId/blogs`
+- `GET /api/profiles/site/:siteSlug`
+- `GET /api/profiles/site/:siteSlug/blogs`
 
-**GET /api/profiles/:userId**
-- Get user profile
-- Returns: `{ user profile data }`
+Detailed endpoint notes are available in `docs/api-overview.md`.
 
-**GET /api/profiles/:userId/blogs**
-- Get user's published blogs
-- Query: `?page=1&limit=10`
-- Returns: `{ blogs[], pagination }`
+## 9. Screenshots
 
-## Architecture Overview
+Add screenshots in this section before final submission.
 
-### Frontend Architecture
-- **Feature-based slicing**: Each Redux slice (auth, blogs, profile) manages independent domain state
-- **Service layer**: Centralized API calls through `apiClient` with request/response interceptors
-- **Component hierarchy**: Layout → Pages → Components, with reusable components like `BlogCard`, `Pagination`
-- **Protected routes**: `ProtectedRoute` wrapper prevents unauthorized access to edit/create pages
-- **Token persistence**: JWT stored in localStorage with auto-attach to API requests
+- Home page screenshot
+- Blog details page screenshot
+- Dashboard screenshot
 
-### Backend Architecture
-- **MVC pattern**: Controllers handle business logic, Models define schemas, Routes wire endpoints
-- **Middleware chain**: CORS → JSON parser → Auth verification → Validation → Route handlers
-- **Error handling**: Global error middleware catches and formats errors consistently
-- **Database indexing**: Text index on blogs for search, compound indexes for feed queries
-- **Schema validation**: Mongoose pre-save hooks for password hashing, express-validator for input checks
+Example placeholders:
 
-### Data Flow
-1. **Auth**: User signup → hash password → save to DB → issue JWT
-2. **Blog creation**: Authenticated request → validate input → save to DB → return populated blog
-3. **Feed**: Fetch blogs with pagination → apply search/tag filters → populate author data → return paginated list
-4. **Ownership check**: On update/delete, verify `req.user.userId === blog.author` before allowing operation
+```md
+![Home](docs/screenshots/home.png)
+![Blog Details](docs/screenshots/blog-details.png)
+![Dashboard](docs/screenshots/dashboard.png)
+```
 
-## Deployment
+## 10. AI Usage and Disclosure
 
-### Deploy Backend to Render
+This project used GitHub Copilot for assistance in:
+- Refactoring repetitive code.
+- Writing and improving documentation.
+- Improving styling and accessibility fixes.
+- Suggesting API and structure cleanup.
 
-1. **Create Render Web Service**
-   - Connect GitHub repo
-   - Set build command: `npm install`
-   - Set start command: `npm start`
-   - Select Node runtime
+All AI-generated or AI-assisted outputs were reviewed, edited, and validated manually before commit.
 
-2. **Set Environment Variables**
-   - NODE_ENV: `production`
-   - PORT: `5000` (auto-assigned by Render)
-   - MONGODB_URI: Your MongoDB Atlas connection string
-   - JWT_SECRET: Strong random secret
-   - JWT_EXPIRES_IN: `7d`
-   - CORS_ORIGIN: Your frontend Render URL (e.g., `https://blog-frontend.onrender.com`)
+## 11. Future Improvements
 
-3. **Deploy**
-   - Push to main branch
-   - Render auto-deploys
+- Complete Flutter mobile app in the `mobile/` folder.
+- Rich text editor with markdown support.
+- Notification system for likes/comments.
+- Drafts, scheduled publishing, and autosave.
+- Role-based moderation/admin tools.
+- Image upload to cloud storage.
 
-### Deploy Frontend to Render
+## Professional Notes for Evaluators
 
-1. **Create Render Static Site**
-   - Connect GitHub repo
-   - Set build command: `npm install && npm run build`
-   - Set publish directory: `dist`
-
-2. **Set Environment Variables**
-   - VITE_API_BASE_URL: Your backend Render URL (e.g., `https://blog-backend.onrender.com/api`)
-
-3. **Deploy**
-   - Render auto-deploys on push
-
-### Post-Deployment Checklist
-- [ ] Backend health check: visit `https://backend-url/api/health`
-- [ ] Test signup/login flow in production
-- [ ] Create test blog post
-- [ ] Verify search and pagination
-- [ ] Test like/bookmark/comment features
-- [ ] Check CORS errors in browser console
+- Repository is organized for clear backend/frontend separation.
+- API and architecture docs are available in `docs/`.
+- Environment templates are provided for easy setup.
+- Build artifacts and dependencies are excluded via `.gitignore`.
 
 ## AI Usage & Disclosure
 
