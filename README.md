@@ -206,6 +206,53 @@ This project used GitHub Copilot for assistance in:
 
 All AI-generated or AI-assisted outputs were reviewed, edited, and validated manually before commit.
 
+## 10.1 Prompting Techniques Used
+
+The following prompting techniques were used while developing Blogify with AI tools:
+
+- Role-based prompting:
+   - Asked the AI to behave as a senior full-stack engineer for architecture, validation, and production-safe changes.
+- Constraint-based prompting:
+   - Gave strict constraints such as "do not break existing routes", "preserve current APIs", and "only commit required files".
+- Task decomposition:
+   - Broke large tasks into smaller prompts (for example: fix errors first, then redesign UI, then validate, then commit).
+- Iterative refinement:
+   - Used follow-up prompts to refine outputs (UI adjustments, deletion flow behavior, and deployment fixes).
+- Verification-first prompting:
+   - Explicitly requested lint/build/error checks after code changes before commit/push.
+
+These techniques improved reliability, reduced regressions, and made AI assistance easier to audit.
+
+## 10.2 How AI Tools Were Leveraged
+
+AI tools (primarily GitHub Copilot) were used for:
+
+- Code generation and refactoring:
+   - Reusable component cleanup, route/controller alignment, and middleware improvements.
+- Debugging support:
+   - Faster identification of lint/diagnostic issues and structured fixes.
+- UI/UX iteration:
+   - Homepage redesign, dashboard styling improvements, and accessibility-oriented updates.
+- Documentation quality:
+   - README restructuring, API summaries, architecture notes, and setup clarity.
+- Release workflow support:
+   - Guided commit scoping, selective staging, and deployment configuration checks.
+
+Manual review was always applied before accepting AI outputs.
+
+## 10.3 Challenges Faced and How They Were Resolved
+
+- Challenge: CORS and auth failures after deployment.
+   - Resolution: Normalized origin matching in backend CORS checks and validated environment values.
+- Challenge: Frontend style/compiler breakages with SCSS and utility usage.
+   - Resolution: Reworked unsupported patterns, simplified SCSS where needed, and revalidated builds.
+- Challenge: Quality tooling variability on local environment.
+   - Resolution: Installed/used Codacy CLI and complemented with local lint/build/diagnostic checks.
+- Challenge: Keeping commits clean while many files changed.
+   - Resolution: Used selective staging and focused commits for requested features.
+- Challenge: Safe permanent account deletion.
+   - Resolution: Added explicit confirmation modal and ensured server-side cascade cleanup of user-related data.
+
 ## 11. Future Improvements
 
 - Complete Flutter mobile app in the `mobile/` folder.
