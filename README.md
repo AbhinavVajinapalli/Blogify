@@ -180,6 +180,41 @@ Frontend runs on `http://localhost:3000`.
 
 Detailed endpoint notes are available in `docs/api-overview.md`.
 
+## Mobile Application (Flutter)
+
+In addition to the web platform, Blogify also includes a cross-platform mobile application built using Flutter.
+
+### Features
+
+- Google OAuth authentication (integrated with backend)
+- View all blog posts (home feed)
+- View detailed blog content
+- Create, edit, and delete blog posts
+- Like, bookmark, and comment on posts
+- View user profiles and personal posts
+- Persistent login using JWT
+
+### Architecture
+
+- Built using Flutter with GetX for state management
+- REST API integration using Dio
+- Shared backend with the MERN web application
+
+### Tech Stack
+
+- Flutter (UI framework)
+- GetX (state management and routing)
+- Dio (API communication)
+- SharedPreferences (local storage)
+
+### Integration
+
+The mobile app uses the same backend APIs as the web application:
+
+```text
+https://your-backend.onrender.com
+```
+
 ## 9. Screenshots
 
 Add screenshots in this section before final submission.
