@@ -31,30 +31,32 @@ export const getUserProfile = async (req, res, next) => {
 export const getUserBlogs = async (req, res, next) => {
   try {
     const { page = 1, limit = 10 } = req.query;
+    const pageNumber = Number.parseInt(page, 10);
+    const limitNumber = Number.parseInt(limit, 10);
 
     const user = await User.findById(req.params.userId);
     if (!user) {
       throw new ApiError(404, 'User not found');
     }
 
-    const skip = (page - 1) * limit;
+    const skip = (pageNumber - 1) * limitNumber;
 
     const blogs = await Blog.find({ author: req.params.userId })
       .populate('author', 'name email profilePicture bio siteName siteSlug')
       .populate('likes', 'name email')
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(parseInt(limit));
+      .limit(limitNumber);
 
     const total = await Blog.countDocuments({ author: req.params.userId });
 
     return successResponse(res, 200, {
       blogs,
       pagination: {
-        currentPage: parseInt(page),
-        limit: parseInt(limit),
+        currentPage: pageNumber,
+        limit: limitNumber,
         total,
-        pages: Math.ceil(total / limit),
+        pages: Math.ceil(total / limitNumber),
       },
     });
   } catch (error) {
@@ -89,20 +91,22 @@ export const getSiteProfileBySlug = async (req, res, next) => {
 export const getSiteBlogsBySlug = async (req, res, next) => {
   try {
     const { page = 1, limit = 10 } = req.query;
+    const pageNumber = Number.parseInt(page, 10);
+    const limitNumber = Number.parseInt(limit, 10);
 
     const user = await User.findOne({ siteSlug: req.params.siteSlug });
     if (!user) {
       throw new ApiError(404, 'Site not found');
     }
 
-    const skip = (page - 1) * limit;
+    const skip = (pageNumber - 1) * limitNumber;
 
     const blogs = await Blog.find({ author: user._id })
       .populate('author', 'name email profilePicture bio siteName siteSlug')
       .populate('likes', 'name email')
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(parseInt(limit));
+      .limit(limitNumber);
 
     const total = await Blog.countDocuments({ author: user._id });
 
@@ -114,10 +118,10 @@ export const getSiteBlogsBySlug = async (req, res, next) => {
       },
       blogs,
       pagination: {
-        currentPage: parseInt(page),
-        limit: parseInt(limit),
+        currentPage: pageNumber,
+        limit: limitNumber,
         total,
-        pages: Math.ceil(total / limit),
+        pages: Math.ceil(total / limitNumber),
       },
     });
   } catch (error) {

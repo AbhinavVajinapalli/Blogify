@@ -6,6 +6,7 @@ import {
   loginWithGoogle,
   getCurrentUser,
   updateProfile,
+  deleteAccount,
 } from '../controllers/authController.js';
 import {
   validateSignup,
@@ -21,5 +22,6 @@ router.post('/login', validateLogin, handleValidationErrors, login);
 router.post('/google', validateGoogleAuth, handleValidationErrors, loginWithGoogle);
 router.get('/me', verifyToken, getCurrentUser);
 router.patch('/me', verifyToken, updateProfile);
+router.delete('/me', verifyToken, deleteAccount);
 
 export default router;

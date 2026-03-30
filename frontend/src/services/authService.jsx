@@ -20,4 +20,8 @@ export const authService = {
   updateProfile: async (data) => {
     return apiClient.patch('/auth/me', data);
   },
+
+  deleteAccount: async () => {
+    return apiClient.delete('/auth/me');
+  },
 };

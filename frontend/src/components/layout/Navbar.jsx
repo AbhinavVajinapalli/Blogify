@@ -22,13 +22,12 @@ const Navbar = () => {
           <Logo text="Blogify" />
         </Link>
 
-        <div className="navbar-center">
-          <Link to="/">Home</Link>
-        </div>
-
         <div className="navbar-right">
           {isAuthenticated ? (
             <>
+              <Link to="/explore" className="btn btn-secondary">
+                Explore
+              </Link>
               <Link to="/dashboard/posts" className="btn btn-primary">
                 Dashboard
               </Link>

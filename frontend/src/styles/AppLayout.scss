@@ -2,14 +2,19 @@
   @apply flex min-h-screen flex-col;
 
   .main-content {
-    @apply flex-1 bg-gradient-to-b from-blue-50 to-gray-50 px-0 py-12;
+    @apply flex-1 bg-gradient-to-b from-slate-100 via-blue-50 to-white px-4 py-8;
+  }
+
+  .content-panel {
+    @apply mx-auto w-full max-w-full min-h-0;
+    min-height: 65vh;
   }
 }
 
 @media (max-width: 900px) {
   .app-layout {
     .main-content {
-      @apply py-7;
+      @apply px-0 py-6;
     }
   }
 }

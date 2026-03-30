@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { connectDB, disconnectDB } from '../src/config/db.js';
 import User from '../src/models/User.js';
 import Blog from '../src/models/Blog.js';
@@ -104,7 +103,7 @@ const seedDB = async () => {
     console.log('✓ Created 5 test blogs');
 
     // Create test comments
-    const comments = await Comment.create([
+    await Comment.create([
       {
         content: 'Great explanation of hooks! This really helped me understand the useEffect cleanup pattern.',
         author: user2._id,
@@ -138,4 +137,4 @@ const seedDB = async () => {
   }
 };
 
-seedDB();
+await seedDB();

@@ -1,0 +1,27 @@
+.main-sidebar {
+  @apply sticky top-24 hidden h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:block;
+
+  h3 {
+    @apply mb-3 text-sm font-semibold uppercase tracking-wider text-slate-500;
+  }
+
+  nav {
+    @apply flex flex-col gap-2;
+
+    a {
+      @apply rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition-all duration-300 hover:bg-blue-50 hover:text-blue-700;
+
+      &.active {
+        @apply bg-blue-600 text-white;
+      }
+    }
+  }
+
+  .sidebar-promo {
+    @apply mt-5 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 p-4 text-white;
+
+    p {
+      @apply m-0 text-sm leading-relaxed;
+    }
+  }
+}

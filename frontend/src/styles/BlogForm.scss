@@ -1,5 +1,5 @@
 .blog-form {
-  @apply rounded-lg bg-white p-7 shadow-md;
+  @apply rounded-2xl border border-amber-100 bg-white p-7 shadow-md;
 
   .form-group {
     @apply mb-5;
@@ -10,11 +10,11 @@
 
     input,
     textarea {
-      @apply w-full rounded border border-gray-300 px-3 py-3 text-sm;
+      @apply w-full rounded-lg border border-slate-300 px-3 py-3 text-sm;
       font: inherit;
 
       &:focus {
-        @apply border-blue-600 outline-none ring-2 ring-blue-100;
+        @apply border-emerald-600 outline-none ring-2 ring-emerald-100;
       }
 
       &.error {
@@ -32,6 +32,11 @@
   }
 
   button[type='submit'] {
-    @apply w-full rounded border-none bg-blue-600 px-3 py-3 font-semibold text-white transition-all duration-300 hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply w-full rounded-lg border-none px-3 py-3 font-semibold text-white transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60;
+    background: linear-gradient(120deg, #047857 0%, #0f766e 100%);
+
+    &:hover {
+      background: linear-gradient(120deg, #065f46 0%, #115e59 100%);
+    }
   }
 }

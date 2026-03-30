@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import AppLayout from './components/layout/AppLayout';
 import DashboardLayout from './components/layout/DashboardLayout';
@@ -21,8 +20,6 @@ import { logout, setCurrentUser } from './features/auth/authSlice';
 
 function App() {
   const dispatch = useDispatch();
-  // eslint-disable-next-line no-unused-vars
-  const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const hydrateCurrentUser = async () => {
@@ -34,6 +31,7 @@ function App() {
         const user = await authService.getCurrentUser();
         dispatch(setCurrentUser(user));
       } catch (error) {
+        console.error('Failed to hydrate current user', error);
         dispatch(logout());
       }
     };

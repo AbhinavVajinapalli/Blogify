@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import '../../styles/BlogForm.scss';
 
 const BlogForm = ({ initialData = {}, onSubmit, isLoading = false }) => {
@@ -50,7 +51,7 @@ const BlogForm = ({ initialData = {}, onSubmit, isLoading = false }) => {
       tags: formData.tags
         .split(',')
         .map((tag) => tag.trim())
-        .filter((tag) => tag),
+        .filter(Boolean),
     };
 
     // Do not send empty image URL; backend treats blank string as invalid URL.
@@ -120,6 +121,17 @@ const BlogForm = ({ initialData = {}, onSubmit, isLoading = false }) => {
       </button>
     </form>
   );
+};
+
+BlogForm.propTypes = {
+  initialData: PropTypes.shape({
+    title: PropTypes.string,
+    content: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    imageUrl: PropTypes.string,
+  }),
+  onSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default BlogForm;

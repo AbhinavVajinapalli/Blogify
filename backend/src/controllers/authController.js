@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 import { OAuth2Client } from 'google-auth-library';
 import { getEnv } from '../config/env.js';
 import User from '../models/User.js';
+import Blog from '../models/Blog.js';
+import Comment from '../models/Comment.js';
 import { ApiError } from '../utils/ApiError.js';
 import { successResponse } from '../utils/ApiResponse.js';
 
@@ -22,10 +24,10 @@ const slugify = (value = '') =>
   value
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
+    .replaceAll(/[^a-z0-9\s-]/g, '')
+    .replaceAll(/\s+/g, '-')
+    .replaceAll(/-+/g, '-')
+    .replaceAll(/^-|-$/g, '');
 
 const buildUniqueSiteSlug = async (baseInput, excludeUserId = null) => {
   const baseSlug = slugify(baseInput) || 'blog';
@@ -164,19 +166,7 @@ export const loginWithGoogle = async (req, res, next) => {
 
     let user = await User.findOne({ email: payload.email });
 
-    if (!user) {
-      const siteSlug = await buildUniqueSiteSlug(payload.name);
-      const siteName = `${payload.name}'s Blog`;
-      user = await User.create({
-        name: payload.name,
-        email: payload.email,
-        password: buildRandomPassword(),
-        profilePicture: payload.picture || null,
-        googleId: payload.sub,
-        siteName,
-        siteSlug,
-      });
-    } else {
+    if (user) {
       let changed = false;
       if (!user.googleId) {
         user.googleId = payload.sub;
@@ -190,6 +180,18 @@ export const loginWithGoogle = async (req, res, next) => {
       if (changed) {
         await user.save();
       }
+    } else {
+      const siteSlug = await buildUniqueSiteSlug(payload.name);
+      const siteName = `${payload.name}'s Blog`;
+      user = await User.create({
+        name: payload.name,
+        email: payload.email,
+        password: buildRandomPassword(),
+        profilePicture: payload.picture || null,
+        googleId: payload.sub,
+        siteName,
+        siteSlug,
+      });
     }
 
     const token = generateToken(user._id);
@@ -266,6 +268,43 @@ export const updateProfile = async (req, res, next) => {
       siteName: user.siteName,
       siteSlug: user.siteSlug,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteAccount = async (req, res, next) => {
+  try {
+    const userId = req.user.userId;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new ApiError(404, 'User not found');
+    }
+
+    const authoredBlogs = await Blog.find({ author: userId }).select('_id');
+    const authoredBlogIds = authoredBlogs.map((blog) => blog._id);
+
+    if (authoredBlogIds.length > 0) {
+      await Comment.deleteMany({ blog: { $in: authoredBlogIds } });
+      await Blog.deleteMany({ author: userId });
+    }
+
+    await Comment.deleteMany({ author: userId });
+
+    await Blog.updateMany(
+      {},
+      {
+        $pull: {
+          likes: userId,
+          bookmarks: userId,
+        },
+      }
+    );
+
+    await user.deleteOne();
+
+    return successResponse(res, 200, null, 'Account deleted permanently');
   } catch (error) {
     next(error);
   }

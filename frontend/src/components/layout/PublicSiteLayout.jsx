@@ -17,6 +17,7 @@ const PublicSiteLayout = () => {
         const data = await blogService.getSiteProfile(siteSlug);
         setSite(data);
       } catch (error) {
+        console.error('Failed to load public site profile', error);
         setSite(null);
       }
     };

@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
-import { setCurrentUser } from '../features/auth/authSlice';
+import { logout, setCurrentUser } from '../features/auth/authSlice';
 import '../styles/pages/DashboardSettingsPage.scss';
 
 const DashboardSettingsPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
@@ -17,6 +19,8 @@ const DashboardSettingsPage = () => {
   });
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
+  const [deleteText, setDeleteText] = useState('');
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     setFormData({
@@ -55,6 +59,30 @@ const DashboardSettingsPage = () => {
       setStatus(err.message || 'Failed to update profile');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (deleteText !== 'DELETE') {
+      setStatus('Type DELETE to permanently remove your account');
+      return;
+    }
+
+    if (!globalThis.confirm('This action is permanent and cannot be undone. Continue?')) {
+      return;
+    }
+
+    setDeleteLoading(true);
+    setStatus('');
+
+    try {
+      await authService.deleteAccount();
+      dispatch(logout());
+      navigate('/signup');
+    } catch (err) {
+      setStatus(err.message || 'Failed to delete account');
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -102,6 +130,26 @@ const DashboardSettingsPage = () => {
           {loading ? 'Saving...' : 'Save Settings'}
         </button>
       </form>
+
+      <section className="danger-zone">
+        <h3>Danger Zone</h3>
+        <p>Permanently delete your account, posts, comments, and all related data.</p>
+        <label htmlFor="deleteConfirm">Type DELETE to confirm</label>
+        <input
+          id="deleteConfirm"
+          value={deleteText}
+          onChange={(e) => setDeleteText(e.target.value)}
+          placeholder="DELETE"
+        />
+        <button
+          type="button"
+          className="btn btn-danger"
+          onClick={handleDeleteAccount}
+          disabled={deleteLoading}
+        >
+          {deleteLoading ? 'Deleting account...' : 'Delete Account Permanently'}
+        </button>
+      </section>
     </div>
   );
 };

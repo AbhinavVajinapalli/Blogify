@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { setFeed, setFilters, setLoading, setError } from '../features/blogs/blogsSlice';
 import { blogService } from '../services/blogService';
 import BlogCard from '../components/blog/BlogCard';
@@ -59,6 +60,28 @@ const FeedPage = ({ detailBasePath = '/blogs', mode = 'all' }) => {
     setCurrentPage(page);
   };
 
+  let content = <div className="no-blogs">No blogs found. Be the first to write one!</div>;
+
+  if (loading) {
+    content = <div className="loading">Loading blogs...</div>;
+  } else if (feed.length > 0) {
+    content = (
+      <>
+        <div className="blogs-grid">
+          {feed.map((blog) => (
+            <BlogCard key={blog._id} blog={blog} detailBasePath={resolvedDetailBasePath} />
+          ))}
+        </div>
+        <Pagination
+          currentPage={currentPage}
+          total={pagination.total}
+          limit={pagination.limit}
+          onPageChange={handlePageChange}
+        />
+      </>
+    );
+  }
+
   return (
     <div className="feed-page">
       <div className="container">
@@ -67,29 +90,15 @@ const FeedPage = ({ detailBasePath = '/blogs', mode = 'all' }) => {
         {mode !== 'site' && <SearchBar onSearch={handleSearch} />}
 
         {error && <div className="error">{error}</div>}
-
-        {loading ? (
-          <div className="loading">Loading blogs...</div>
-        ) : feed.length > 0 ? (
-          <>
-            <div className="blogs-grid">
-              {feed.map((blog) => (
-                <BlogCard key={blog._id} blog={blog} detailBasePath={resolvedDetailBasePath} />
-              ))}
-            </div>
-            <Pagination
-              currentPage={currentPage}
-              total={pagination.total}
-              limit={pagination.limit}
-              onPageChange={handlePageChange}
-            />
-          </>
-        ) : (
-          <div className="no-blogs">No blogs found. Be the first to write one!</div>
-        )}
+        {content}
       </div>
     </div>
   );
+};
+
+FeedPage.propTypes = {
+  detailBasePath: PropTypes.string,
+  mode: PropTypes.oneOf(['all', 'site']),
 };
 
 export default FeedPage;

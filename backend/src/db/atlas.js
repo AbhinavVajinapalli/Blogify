@@ -1,6 +1,14 @@
 import mongoose from 'mongoose';
 import { getEnv } from '../config/env.js';
 
+const logInfo = (message) => {
+  process.stdout.write(`${message}\n`);
+};
+
+const logError = (message) => {
+  process.stderr.write(`${message}\n`);
+};
+
 export const connectDB = async () => {
   try {
     const mongoUri = getEnv('MONGODB_URI');
@@ -14,10 +22,10 @@ export const connectDB = async () => {
       w: 'majority',
     });
 
-    console.log('MongoDB Atlas connected successfully');
+    logInfo('MongoDB Atlas connected successfully');
     return mongoose.connection;
   } catch (error) {
-    console.error('MongoDB Atlas connection error:', error.message);
+    logError(`MongoDB Atlas connection error: ${error.message}`);
     process.exit(1);
   }
 };
@@ -25,8 +33,8 @@ export const connectDB = async () => {
 export const disconnectDB = async () => {
   try {
     await mongoose.disconnect();
-    console.log('MongoDB disconnected');
+    logInfo('MongoDB disconnected');
   } catch (error) {
-    console.error('Error disconnecting MongoDB:', error.message);
+    logError(`Error disconnecting MongoDB: ${error.message}`);
   }
 };

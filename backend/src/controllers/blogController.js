@@ -28,6 +28,8 @@ export const createBlog = async (req, res, next) => {
 export const getBlogs = async (req, res, next) => {
   try {
     const { page = 1, limit = 10, search = '', tag = '' } = req.query;
+    const pageNumber = Number.parseInt(page, 10);
+    const limitNumber = Number.parseInt(limit, 10);
 
     const filter = {};
 
@@ -39,24 +41,24 @@ export const getBlogs = async (req, res, next) => {
       filter.tags = { $in: tag.split(',').map((t) => t.trim()) };
     }
 
-    const skip = (page - 1) * limit;
+    const skip = (pageNumber - 1) * limitNumber;
 
     const blogs = await Blog.find(filter)
       .populate('author', 'name email profilePicture bio siteName siteSlug')
       .populate('likes', 'name email')
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(parseInt(limit));
+      .limit(limitNumber);
 
     const total = await Blog.countDocuments(filter);
 
     return successResponse(res, 200, {
       blogs,
       pagination: {
-        currentPage: parseInt(page),
-        limit: parseInt(limit),
+        currentPage: pageNumber,
+        limit: limitNumber,
         total,
-        pages: Math.ceil(total / limit),
+        pages: Math.ceil(total / limitNumber),
       },
     });
   } catch (error) {
@@ -221,29 +223,31 @@ export const addComment = async (req, res, next) => {
 export const getComments = async (req, res, next) => {
   try {
     const { page = 1, limit = 10 } = req.query;
+    const pageNumber = Number.parseInt(page, 10);
+    const limitNumber = Number.parseInt(limit, 10);
 
     const blog = await Blog.findById(req.params.id);
     if (!blog) {
       throw new ApiError(404, 'Blog not found');
     }
 
-    const skip = (page - 1) * limit;
+    const skip = (pageNumber - 1) * limitNumber;
 
     const comments = await Comment.find({ blog: req.params.id })
       .populate('author', 'name email profilePicture siteName siteSlug')
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(parseInt(limit));
+      .limit(limitNumber);
 
     const total = await Comment.countDocuments({ blog: req.params.id });
 
     return successResponse(res, 200, {
       comments,
       pagination: {
-        currentPage: parseInt(page),
-        limit: parseInt(limit),
+        currentPage: pageNumber,
+        limit: limitNumber,
         total,
-        pages: Math.ceil(total / limit),
+        pages: Math.ceil(total / limitNumber),
       },
     });
   } catch (error) {

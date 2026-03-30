@@ -4,7 +4,7 @@
   "description": "Blog platform frontend with React and Redux Toolkit",
   "private": true,
   "scripts": {
-    "start": "npx cross-env PORT=3001 react-scripts start",
+    "start": "npx cross-env PORT=3000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

@@ -1,32 +1,133 @@
 .dashboard-posts-page {
+  animation: fadeIn 0.5s ease-out;
+
   .page-head {
-    @apply mb-4 flex items-center justify-between;
+    @apply mb-6 flex items-center justify-between;
+    animation: slideDown 0.5s ease-out;
+
+    h2 {
+      @apply text-2xl font-bold;
+      background: linear-gradient(135deg, #1e293b, #4f46e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
   }
 
   .empty-state {
-    @apply rounded-xl border border-dashed border-blue-300 px-5 py-10 text-center;
+    @apply rounded-2xl px-6 py-16 text-center;
+    background: 
+      linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(168, 85, 247, 0.05)),
+      rgba(255, 255, 255, 0.7);
+    border: 2px dashed rgba(102, 126, 234, 0.3);
+    backdrop-filter: blur(10px);
+    animation: scaleIn 0.5s ease-out;
+
+    p {
+      @apply text-lg mb-4;
+      color: #64748b;
+    }
   }
 
   .post-list {
-    @apply grid gap-3;
+    @apply grid gap-4;
   }
 
   .post-row {
-    @apply flex items-center gap-4 rounded-xl border border-gray-200 p-3.5;
+    @apply flex items-center gap-5 rounded-2xl p-5;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(102, 126, 234, 0.2);
+    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.08);
+    backdrop-filter: blur(10px);
+    transition: var(--transition-smooth);
+    animation: slideUp 0.5s ease-out both;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      transform: translateX(6px);
+      border-color: rgba(102, 126, 234, 0.4);
+      box-shadow: 0 8px 30px rgba(79, 70, 229, 0.15);
+
+      &::before {
+        transform: scaleY(1);
+      }
+    }
+
+    &:nth-child(1) { animation-delay: 0.05s; }
+    &:nth-child(2) { animation-delay: 0.1s; }
+    &:nth-child(3) { animation-delay: 0.15s; }
+    &:nth-child(4) { animation-delay: 0.2s; }
+    &:nth-child(5) { animation-delay: 0.25s; }
+    &:nth-child(n+6) { animation-delay: 0.3s; }
+
+    > div:first-child {
+      flex: 1;
+      min-width: 0;
+    }
 
     h3 {
-      @apply m-0 mb-1;
+      @apply m-0 mb-2 text-xl font-bold;
+      color: #1e293b;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     p {
-      @apply m-0 text-sm text-slate-600;
+      @apply m-0 text-sm flex items-center gap-2 flex-wrap;
+      color: #64748b;
+
+      &::before {
+        content: '📅';
+        font-size: 0.875rem;
+      }
     }
 
     .actions {
-      @apply ml-auto flex flex-wrap gap-2;
+      @apply flex flex-wrap gap-2;
+
+      .btn {
+        @apply px-4 py-2 text-sm;
+      }
 
       .btn-danger {
-        @apply bg-red-600 text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-65;
+        background: linear-gradient(135deg, #be123c 0%, #9f1239 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(190, 18, 60, 0.25);
+
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(250, 112, 154, 0.35);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+          transform: none;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .post-row {
+      @apply flex-col items-start gap-3;
+
+      .actions {
+        @apply w-full justify-end;
       }
     }
   }

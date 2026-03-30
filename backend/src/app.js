@@ -14,16 +14,18 @@ const normalizeOrigin = (origin = '') => origin.trim().replace(/\/+$/, '');
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-const allowedOrigins = (getEnv('CORS_ORIGIN') || 'http://localhost:3000,http://localhost:3001')
-  .split(',')
-  .map((origin) => normalizeOrigin(origin))
-  .filter(Boolean);
+const allowedOrigins = new Set(
+  (getEnv('CORS_ORIGIN') || 'http://localhost:3000,http://localhost:3001')
+    .split(',')
+    .map((origin) => normalizeOrigin(origin))
+    .filter(Boolean)
+);
 
 const corsOptions = {
   origin: (origin, callback) => {
     const normalizedOrigin = normalizeOrigin(origin || '');
     // Allow non-browser clients (no Origin header) and configured browser origins.
-    if (!origin || allowedOrigins.includes(normalizedOrigin)) {
+    if (!origin || allowedOrigins.has(normalizedOrigin)) {
       callback(null, true);
       return;
     }

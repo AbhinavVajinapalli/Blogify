@@ -1,51 +1,148 @@
 .blog-card {
-  @apply overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-1;
+  @apply overflow-hidden rounded-3xl;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  box-shadow: 0 10px 30px rgba(79, 70, 229, 0.1);
+  backdrop-filter: blur(10px);
+  transition: var(--transition-smooth);
+  animation: slideUp 0.6s ease-out both;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(168, 85, 247, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(102, 126, 234, 0.4);
+    box-shadow: 
+      0 20px 50px rgba(79, 70, 229, 0.2),
+      0 0 0 1px rgba(102, 126, 234, 0.3);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .blog-image {
+      transform: scale(1.1);
+    }
+  }
 
   .blog-image {
-    @apply h-48 w-full object-cover;
+    @apply h-52 w-full object-cover;
+    transition: transform 0.6s ease;
   }
 
   .blog-content {
-    @apply p-5;
+    @apply p-6;
+    position: relative;
+    z-index: 1;
   }
 
   .blog-title {
-    @apply mb-2.5 text-lg text-gray-900 hover:text-blue-600;
+    @apply mb-3 text-xl font-bold;
+    color: #1e293b;
+    transition: var(--transition-smooth);
+    
+    &:hover {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
   }
 
   .blog-excerpt {
-    @apply mb-3 line-clamp-3 text-sm text-gray-600;
+    @apply mb-4 line-clamp-3 text-sm leading-relaxed;
+    color: #64748b;
   }
 
   .blog-meta {
-    @apply mb-2.5 flex items-center justify-between text-xs text-gray-500;
+    @apply mb-3 flex items-center justify-between text-xs;
+    color: #94a3b8;
 
     .author-name {
-      @apply font-semibold text-gray-900;
+      @apply font-semibold;
+      background: linear-gradient(135deg, #1e293b, #4f46e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
   }
 
   .blog-tags {
-    @apply mb-3 flex flex-wrap gap-2;
+    @apply mb-4 flex flex-wrap gap-2;
 
     .tag {
-      @apply rounded bg-gray-100 px-2 py-1 text-xs text-gray-600;
+      @apply rounded-full px-3 py-1.5 text-xs font-medium;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(168, 85, 247, 0.1));
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      color: #0f172a;
+      transition: var(--transition-smooth);
+
+      &:hover {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(168, 85, 247, 0.2));
+        transform: translateY(-2px);
+      }
     }
   }
 
   .blog-actions {
-    @apply flex gap-2.5;
+    @apply flex gap-3 items-center;
 
     .like-btn {
-      @apply border border-gray-300 rounded px-3 py-2 text-sm transition-all duration-300 hover:border-red-500;
+      @apply rounded-xl px-4 py-2 text-sm font-medium;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1.5px solid rgba(102, 126, 234, 0.3);
+      color: #475569;
+      transition: var(--transition-smooth);
+
+      &:hover {
+        background: rgba(250, 112, 154, 0.2);
+        border-color: rgba(250, 112, 154, 0.4);
+        color: #4c0519;
+        transform: translateY(-2px);
+      }
 
       &.liked {
-        @apply border-red-500 bg-red-100 text-red-600;
+        background: linear-gradient(135deg, rgba(250, 112, 154, 0.25), rgba(245, 87, 108, 0.25));
+        border-color: #881337;
+        color: #4c0519;
+        font-weight: 600;
       }
     }
 
     .read-more {
-      @apply ml-auto font-semibold text-blue-600;
+      @apply ml-auto font-semibold text-sm;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      
+      &::after {
+        content: '→';
+        margin-left: 4px;
+        transition: margin-left 0.3s ease;
+      }
+
+      &:hover::after {
+        margin-left: 8px;
+      }
     }
   }
+
+  /* Stagger animation for multiple cards */
+  &:nth-child(1) { animation-delay: 0.05s; }
+  &:nth-child(2) { animation-delay: 0.1s; }
+  &:nth-child(3) { animation-delay: 0.15s; }
+  &:nth-child(4) { animation-delay: 0.2s; }
+  &:nth-child(5) { animation-delay: 0.25s; }
+  &:nth-child(6) { animation-delay: 0.3s; }
+  &:nth-child(n+7) { animation-delay: 0.35s; }
 }

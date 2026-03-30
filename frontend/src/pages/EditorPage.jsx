@@ -11,8 +11,7 @@ const EditorPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // eslint-disable-next-line no-unused-vars
-  const { selectedBlog, operationStatus, error } = useSelector((state) => state.blogs);
+  const { operationStatus, error } = useSelector((state) => state.blogs);
   const [initialData, setInitialData] = useState(null);
   const [loading, setLoading] = useState(Boolean(id));
   const isDashboardRoute = location.pathname.startsWith('/dashboard');

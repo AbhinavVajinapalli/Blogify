@@ -8,7 +8,7 @@ import { blogService } from '../services/blogService';
 const DashboardCreatePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [error, setLocalError] = useState('');
+  const [localError, setLocalError] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
   const handleCreate = async (data) => {
@@ -34,7 +34,7 @@ const DashboardCreatePage = () => {
     <div className="editor-page">
       <div className="container">
         <h1>Create New Post</h1>
-        {error && <div className="error">{error}</div>}
+        {localError && <div className="error">{localError}</div>}
         <BlogForm onSubmit={handleCreate} isLoading={isSaving} />
       </div>
     </div>

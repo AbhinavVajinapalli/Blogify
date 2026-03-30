@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GoogleLogin } from '@react-oauth/google';
@@ -54,6 +55,10 @@ const EyeIcon = ({ visible }) => (
     )}
   </svg>
 );
+
+EyeIcon.propTypes = {
+  visible: PropTypes.bool.isRequired,
+};
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -234,9 +239,7 @@ const SignupPage = () => {
                 Suggest strong password
               </button>
             </div>
-            <div className="strength-bar" role="progressbar" aria-valuenow={strength.percentage}>
-              <span style={{ width: `${strength.percentage}%` }} />
-            </div>
+            <progress className="strength-bar" max="100" value={strength.percentage} />
             {missingRules.length > 0 ? (
               <ul className="password-rules">
                 {missingRules.map((rule) => (

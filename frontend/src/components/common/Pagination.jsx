@@ -1,4 +1,5 @@
 import '../../styles/Pagination.scss';
+import PropTypes from 'prop-types';
 
 const Pagination = ({ currentPage, total, limit, onPageChange }) => {
   const pages = Math.ceil(total / limit);
@@ -27,7 +28,7 @@ const Pagination = ({ currentPage, total, limit, onPageChange }) => {
       }
     } else {
       pages_array.push(1);
-      if (currentPage > 3) pages_array.push('...');
+      if (currentPage > 3) pages_array.push('ellipsis-left');
       for (
         let i = Math.max(2, currentPage - 1);
         i <= Math.min(pages - 1, currentPage + 1);
@@ -35,7 +36,7 @@ const Pagination = ({ currentPage, total, limit, onPageChange }) => {
       ) {
         pages_array.push(i);
       }
-      if (currentPage < pages - 2) pages_array.push('...');
+      if (currentPage < pages - 2) pages_array.push('ellipsis-right');
       pages_array.push(pages);
     }
 
@@ -49,14 +50,14 @@ const Pagination = ({ currentPage, total, limit, onPageChange }) => {
       </button>
 
       <div className="page-numbers">
-        {getPageNumbers().map((page, idx) => (
+        {getPageNumbers().map((page) => (
           <button
-            key={idx}
-            onClick={() => page !== '...' && handlePageClick(page)}
-            disabled={page === '...'}
+            key={String(page)}
+            onClick={() => !String(page).startsWith('ellipsis') && handlePageClick(page)}
+            disabled={String(page).startsWith('ellipsis')}
             className={`page-btn ${currentPage === page ? 'active' : ''}`}
           >
-            {page}
+            {String(page).startsWith('ellipsis') ? '...' : page}
           </button>
         ))}
       </div>
@@ -66,6 +67,13 @@ const Pagination = ({ currentPage, total, limit, onPageChange }) => {
       </button>
     </div>
   );
+};
+
+Pagination.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  limit: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
 };
 
 export default Pagination;

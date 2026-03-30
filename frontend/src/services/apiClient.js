@@ -22,7 +22,7 @@ apiClient.interceptors.request.use((config) => {
 apiClient.interceptors.response.use(
   (response) => {
     // Backend uses { success, data, message } envelope for most endpoints.
-    if (response?.data && Object.prototype.hasOwnProperty.call(response.data, 'data')) {
+    if (response?.data && Object.hasOwn(response.data, 'data')) {
       return response.data.data;
     }
     return response.data;

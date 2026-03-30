@@ -1,48 +1,143 @@
 .dashboard-layout {
-  @apply grid min-h-screen grid-cols-[300px_1fr] bg-gray-100;
+  @apply grid min-h-screen grid-cols-[280px_1fr];
+  position: relative;
 
   .dashboard-sidebar {
-    @apply flex flex-col gap-6 bg-gray-900 p-7 text-white;
+    @apply flex flex-col gap-6 p-6;
+    background: 
+      linear-gradient(135deg, rgba(79, 70, 229, 0.95) 0%, rgba(124, 58, 237, 0.95) 100%);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    box-shadow: 4px 0 24px rgba(79, 70, 229, 0.15);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 60%);
+      animation: float 15s ease-in-out infinite;
+      pointer-events: none;
+    }
 
     .brand {
-      @apply text-2xl font-bold tracking-wide;
+      @apply text-2xl font-bold tracking-tight relative z-10;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      animation: slideInLeft 0.6s ease-out;
     }
 
     .dashboard-nav {
-      @apply flex flex-col gap-2;
+      @apply flex flex-col gap-2 relative z-10;
 
       a {
-        @apply rounded-lg px-3 py-2.5 font-medium text-gray-300;
+        @apply rounded-xl px-4 py-3 font-medium transition-all;
+        color: rgba(255, 255, 255, 0.85);
+        position: relative;
+        overflow: hidden;
+        animation: slideInLeft 0.6s ease-out;
 
-        &.active,
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+        }
+
+        &:hover::before {
+          transform: translateX(0);
+        }
+
         &:hover {
-          @apply bg-gray-800 text-white;
+          color: #fff;
+          transform: translateX(4px);
+        }
+
+        &.active {
+          background: rgba(49, 46, 129, 0.45);
+          color: #f8fafc;
+          box-shadow: 
+            0 4px 12px rgba(0, 0, 0, 0.1),
+            0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+          font-weight: 600;
+
+          &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60%;
+            background: #fff;
+            border-radius: 0 4px 4px 0;
+          }
         }
       }
+
+      a:nth-child(1) { animation-delay: 0.1s; }
+      a:nth-child(2) { animation-delay: 0.2s; }
+      a:nth-child(3) { animation-delay: 0.3s; }
+      a:nth-child(4) { animation-delay: 0.4s; }
     }
 
     .logout-btn {
-      @apply mt-auto rounded-lg border-none bg-red-600 px-3 py-2.5 font-semibold text-white;
+      @apply mt-auto rounded-xl px-4 py-3 font-semibold relative z-10;
+      background: linear-gradient(135deg, #be123c 0%, #9f1239 100%);
+      color: #fff;
+      border: none;
+      box-shadow: 0 6px 20px rgba(250, 112, 154, 0.3);
+      transition: var(--transition-smooth);
+      animation: slideInLeft 0.6s ease-out 0.5s both;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(250, 112, 154, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
     }
   }
 
   .dashboard-main {
-    @apply max-w-6xl px-7 py-7;
+    @apply px-8 py-8;
+    animation: fadeIn 0.6s ease-out;
 
     .dashboard-header {
-      @apply mb-5;
+      @apply mb-6;
+      animation: slideUp 0.6s ease-out 0.2s both;
 
       h1 {
-        @apply m-0;
+        @apply m-0 mb-2 text-3xl font-bold;
+        background: linear-gradient(135deg, #1e293b, #4f46e5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
       p {
-        @apply m-1.5 mt-0 text-gray-600;
+        @apply m-0 text-base;
+        color: #64748b;
       }
     }
 
     .dashboard-content {
-      @apply min-h-[70vh] rounded-2xl border border-gray-200 bg-white p-6 shadow-lg;
+      @apply min-h-[75vh] rounded-3xl p-8;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      box-shadow: 
+        0 10px 40px rgba(79, 70, 229, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+      backdrop-filter: blur(20px);
+      animation: slideUp 0.6s ease-out 0.3s both;
     }
   }
 }
@@ -52,14 +147,34 @@
     @apply grid-cols-1;
 
     .dashboard-sidebar {
-      @apply sticky top-0 z-50 flex-row items-center overflow-x-auto;
+      @apply sticky top-0 z-50 flex-row items-center overflow-x-auto p-4;
+
+      .brand {
+        @apply text-lg;
+      }
 
       .dashboard-nav {
-        @apply flex-row;
+        @apply flex-row gap-2;
+
+        a {
+          @apply whitespace-nowrap px-3 py-2 text-sm;
+
+          &.active::after {
+            display: none;
+          }
+        }
       }
 
       .logout-btn {
-        @apply ml-auto mt-0;
+        @apply ml-auto mt-0 px-3 py-2 text-sm;
+      }
+    }
+
+    .dashboard-main {
+      @apply px-4 py-6;
+
+      .dashboard-content {
+        @apply p-5;
       }
     }
   }

@@ -7,7 +7,9 @@ const AppLayout = () => {
     <div className="app-layout">
       <Navbar />
       <main className="main-content">
-        <Outlet />
+        <section className="content-panel">
+          <Outlet />
+        </section>
       </main>
     </div>
   );
