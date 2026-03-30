@@ -31,8 +31,21 @@
     }
   }
 
-  .danger-zone {
-    @apply max-w-3xl rounded-2xl border border-red-300 bg-red-50 p-5;
+  .account-actions {
+    @apply max-w-3xl;
+
+    .btn-danger {
+      @apply rounded-lg bg-red-600 px-4 py-2.5 font-semibold text-white hover:bg-red-700;
+    }
+  }
+
+  .delete-modal-backdrop {
+    @apply fixed inset-0 z-[70] flex items-center justify-center px-4;
+    background: rgba(15, 23, 42, 0.55);
+  }
+
+  .delete-modal {
+    @apply w-full max-w-lg rounded-2xl border border-red-300 bg-white p-6 shadow-xl;
 
     h3 {
       @apply mb-2 mt-0 text-xl text-red-700;
@@ -49,10 +62,18 @@
     input {
       @apply mb-3 w-full rounded-lg border border-red-300 px-3 py-2.5;
       font: inherit;
+
+      &:focus {
+        @apply border-red-500 outline-none ring-2 ring-red-100;
+      }
     }
 
-    .btn-danger {
-      @apply rounded-lg bg-red-600 px-4 py-2.5 font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60;
+    .delete-modal-actions {
+      @apply mt-4 flex justify-end gap-2;
+
+      .btn-danger {
+        @apply rounded-lg bg-red-600 px-4 py-2.5 font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60;
+      }
     }
   }
 }

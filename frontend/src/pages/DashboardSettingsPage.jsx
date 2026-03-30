@@ -19,8 +19,11 @@ const DashboardSettingsPage = () => {
   });
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteText, setDeleteText] = useState('');
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const requiredDeleteText = (user?.name || 'DELETE').trim() || 'DELETE';
 
   useEffect(() => {
     setFormData({
@@ -63,12 +66,8 @@ const DashboardSettingsPage = () => {
   };
 
   const handleDeleteAccount = async () => {
-    if (deleteText !== 'DELETE') {
-      setStatus('Type DELETE to permanently remove your account');
-      return;
-    }
-
-    if (!globalThis.confirm('This action is permanent and cannot be undone. Continue?')) {
+    if (deleteText.trim() !== requiredDeleteText) {
+      setStatus(`Type "${requiredDeleteText}" to permanently remove your account`);
       return;
     }
 
@@ -83,7 +82,22 @@ const DashboardSettingsPage = () => {
       setStatus(err.message || 'Failed to delete account');
     } finally {
       setDeleteLoading(false);
+      setDeleteModalOpen(false);
+      setDeleteText('');
     }
+  };
+
+  const openDeleteModal = () => {
+    setDeleteText('');
+    setDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    if (deleteLoading) {
+      return;
+    }
+    setDeleteModalOpen(false);
+    setDeleteText('');
   };
 
   return (
@@ -131,25 +145,47 @@ const DashboardSettingsPage = () => {
         </button>
       </form>
 
-      <section className="danger-zone">
-        <h3>Danger Zone</h3>
-        <p>Permanently delete your account, posts, comments, and all related data.</p>
-        <label htmlFor="deleteConfirm">Type DELETE to confirm</label>
-        <input
-          id="deleteConfirm"
-          value={deleteText}
-          onChange={(e) => setDeleteText(e.target.value)}
-          placeholder="DELETE"
-        />
-        <button
-          type="button"
-          className="btn btn-danger"
-          onClick={handleDeleteAccount}
-          disabled={deleteLoading}
-        >
-          {deleteLoading ? 'Deleting account...' : 'Delete Account Permanently'}
+      <section className="account-actions">
+        <button type="button" className="btn btn-danger" onClick={openDeleteModal}>
+          Delete Account
         </button>
       </section>
+
+      {deleteModalOpen && (
+        <div className="delete-modal-backdrop">
+          <dialog className="delete-modal" open aria-labelledby="delete-modal-title">
+            <h3 id="delete-modal-title">Confirm Permanent Deletion</h3>
+            <p>
+              This action permanently deletes your account, blogs, comments, likes, and bookmarks
+              from the database.
+            </p>
+            <label htmlFor="deleteConfirm">
+              Type <strong>{requiredDeleteText}</strong> to continue
+            </label>
+            <input
+              id="deleteConfirm"
+              value={deleteText}
+              onChange={(e) => setDeleteText(e.target.value)}
+              placeholder={requiredDeleteText}
+              autoFocus
+            />
+
+            <div className="delete-modal-actions">
+              <button type="button" className="btn btn-secondary" onClick={closeDeleteModal}>
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={handleDeleteAccount}
+                disabled={deleteLoading}
+              >
+                {deleteLoading ? 'Deleting...' : 'Delete Permanently'}
+              </button>
+            </div>
+          </dialog>
+        </div>
+      )}
     </div>
   );
 };

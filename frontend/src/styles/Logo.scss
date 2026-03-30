@@ -2,7 +2,11 @@
   @apply inline-flex items-center gap-2.5;
 
   .logo-mark {
-    @apply inline-flex h-7 w-7 items-center justify-center rounded bg-gradient-to-br from-sky-500 to-blue-600 text-sm font-black leading-none text-white shadow-lg;
+    @apply inline-flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-br from-sky-500 to-blue-600 text-white shadow-lg;
+
+    svg {
+      @apply h-4 w-4;
+    }
   }
 
   .logo-text {
