@@ -145,7 +145,7 @@ Frontend runs on `http://localhost:3000`.
 
 ## 7. Deployment Links
 
-- Frontend URL: `https://blogify-inky-pi.vercel.app/`
+- Frontend URL: [`https://blogify-inky-pi.vercel.app/`](https://blogify-inky-pi.vercel.app/)
 - Backend API URL: `https://blogify-k4qm.onrender.com/api`
 
 ## 8. API Overview
