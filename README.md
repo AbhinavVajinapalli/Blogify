@@ -212,7 +212,7 @@ In addition to the web platform, Blogify also includes a cross-platform mobile a
 The mobile app uses the same backend APIs as the web application:
 
 ```text
-['https://blogify-k4qm.onrender.com'](https://blogify-k4qm.onrender.com)
+https://blogify-k4qm.onrender.com
 ```
 
 ## 9. Screenshots
@@ -226,9 +226,9 @@ Add screenshots in this section before final submission.
 Example placeholders:
 
 ```md
-![Home](images/Home.png)
-![Blog Details](images/Signup.png)
-![Dashboard](images/Dashboard.png)
+[Home](images/Home.png)
+[Blog Details](images/Signup.png)
+[Dashboard](images/Dashboard.png)
 ```
 
 ## 10. AI Usage and Disclosure
