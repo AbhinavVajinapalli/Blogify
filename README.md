@@ -146,7 +146,7 @@ Frontend runs on `http://localhost:3000`.
 ## 7. Deployment Links
 
 - Frontend URL: [`https://blogify-inky-pi.vercel.app/`](https://blogify-inky-pi.vercel.app/)
-- Backend API URL: `https://blogify-k4qm.onrender.com/api`
+- Backend API URL: [[`https://blogify-k4qm.onrender.com/api`](https://blogify-k4qm.onrender.com)
 
 ## 8. API Overview
 
@@ -212,7 +212,7 @@ In addition to the web platform, Blogify also includes a cross-platform mobile a
 The mobile app uses the same backend APIs as the web application:
 
 ```text
-https://your-backend.onrender.com
+['https://blogify-k4qm.onrender.com'](https://blogify-k4qm.onrender.com)
 ```
 
 ## 9. Screenshots
@@ -226,9 +226,9 @@ Add screenshots in this section before final submission.
 Example placeholders:
 
 ```md
-![Home](docs/screenshots/home.png)
-![Blog Details](docs/screenshots/blog-details.png)
-![Dashboard](docs/screenshots/dashboard.png)
+![Home](images/Home.png)
+![Blog Details](images/Signup.png)
+![Dashboard](images/Dashboard.png)
 ```
 
 ## 10. AI Usage and Disclosure
@@ -336,41 +336,6 @@ This project was built with assistance from AI coding tools (GitHub Copilot, Cla
   - Additional input sanitization
   - Comprehensive test coverage
   - CDN for static assets
-
-## Git Commit Strategy
-
-### Branching Model
-```
-main (production) ← develop (integration) ← feature/* (feature branches)
-```
-
-### Commit Convention
-```
-feat(scope): description
-fix(scope): description
-docs(scope): description
-chore(scope): description
-```
-
-### Examples
-```
-feat(auth): add JWT token refresh endpoint
-feat(blogs): implement pagination on feed
-feat(search): add text-search index and query parameters
-fix(auth): handle token expiry in interceptor
-fix(validation): prevent empty blog title submission
-docs(readme): add deployment instructions
-chore(deps): update express to 4.18.2
-```
-
-### PR Checklist
-- [ ] Branch created from `develop`
-- [ ] Code follows project structure
-- [ ] Environment variables documented in .env.example
-- [ ] API contract unchanged or documented
-- [ ] Manual testing completed
-- [ ] No hardcoded secrets
-- [ ] Commit messages follow convention
 
 ## Troubleshooting
 
