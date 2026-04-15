@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/auth/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../common/Logo';
+import ThemeToggle from '../common/ThemeToggle';
 import '../../styles/Navbar.scss';
 
 const Navbar = () => {
@@ -23,6 +24,7 @@ const Navbar = () => {
         </Link>
 
         <div className="navbar-right">
+          <ThemeToggle className="navbar-theme-toggle" />
           {isAuthenticated ? (
             <>
               <Link to="/explore" className="btn btn-secondary">

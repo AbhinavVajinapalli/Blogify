@@ -1,7 +1,7 @@
 .navbar {
   @apply sticky top-0 z-50;
-  background: rgba(255, 255, 255, 0.85);
-  border-bottom: 1px solid rgba(102, 126, 234, 0.15);
+  background: var(--theme-surface);
+  border-bottom: 1px solid var(--theme-border);
   backdrop-filter: blur(20px);
   box-shadow: 0 4px 20px rgba(79, 70, 229, 0.08);
   animation: slideDown 0.5s ease-out;
@@ -27,8 +27,24 @@
     @apply flex items-center gap-3;
     animation: slideInRight 0.6s ease-out;
 
+    .navbar-theme-toggle {
+      @apply static rounded-xl px-3 py-2 text-sm;
+      box-shadow: none;
+      backdrop-filter: blur(10px);
+      border-width: 1px;
+
+      .theme-toggle-text {
+        @apply inline;
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+
     .user-link {
       @apply rounded-xl px-4 py-2.5 font-semibold;
+      color: var(--theme-btn-secondary-text);
       background: linear-gradient(135deg, rgba(102, 126, 234, 0.22), rgba(168, 85, 247, 0.2));
       border: 1.5px solid rgba(102, 126, 234, 0.3);
       transition: var(--transition-smooth);
@@ -37,6 +53,16 @@
         background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(168, 85, 247, 0.2));
         transform: translateY(-2px);
       }
+    }
+  }
+}
+
+[data-theme='dark'] {
+  .navbar {
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.35);
+
+    .navbar-brand {
+      filter: brightness(1.2);
     }
   }
 }
@@ -56,6 +82,14 @@
 
       .btn {
         @apply px-3 py-2 text-sm;
+      }
+
+      .navbar-theme-toggle {
+        @apply px-2.5;
+
+        .theme-toggle-text {
+          @apply hidden;
+        }
       }
 
       .user-link {

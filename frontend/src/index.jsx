@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import store from './app/store';
 import App from './App';
+import { ThemeProvider } from './context/ThemeContext';
 import './styles/index.scss';
 
 const googleClientId =
@@ -14,7 +15,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId={googleClientId}>
       <Provider store={store}>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </Provider>
     </GoogleOAuthProvider>
   </React.StrictMode>

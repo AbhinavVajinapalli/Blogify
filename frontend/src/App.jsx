@@ -15,6 +15,7 @@ import ProfilePage from './pages/ProfilePage';
 import DashboardCreatePage from './pages/DashboardCreatePage';
 import DashboardPostsPage from './pages/DashboardPostsPage';
 import DashboardSettingsPage from './pages/DashboardSettingsPage';
+import ThemeToggle from './components/common/ThemeToggle';
 import { authService } from './services/authService';
 import { logout, setCurrentUser } from './features/auth/authSlice';
 
@@ -41,49 +42,52 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
+      <>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
 
-        <Route element={<AppLayout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/explore" element={<FeedPage />} />
-          <Route path="/blogs/:id" element={<BlogDetailsPage />} />
-          <Route path="/profile/:userId" element={<ProfilePage />} />
-        </Route>
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/explore" element={<FeedPage />} />
+            <Route path="/blogs/:id" element={<BlogDetailsPage />} />
+            <Route path="/profile/:userId" element={<ProfilePage />} />
+          </Route>
 
-        <Route element={<PublicSiteLayout />}>
-          <Route path="/site/:siteSlug" element={<FeedPage mode="site" detailBasePath="/site" />} />
-          <Route path="/site/:siteSlug/posts/:id" element={<BlogDetailsPage />} />
-        </Route>
+          <Route element={<PublicSiteLayout />}>
+            <Route path="/site/:siteSlug" element={<FeedPage mode="site" detailBasePath="/site" />} />
+            <Route path="/site/:siteSlug/posts/:id" element={<BlogDetailsPage />} />
+          </Route>
 
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<Navigate to="posts" replace />} />
-          <Route path="create" element={<DashboardCreatePage />} />
-          <Route path="new" element={<DashboardCreatePage />} />
-          <Route path="posts" element={<DashboardPostsPage />} />
-          <Route path="settings" element={<DashboardSettingsPage />} />
-          <Route path="edit/:id" element={<EditorPage />} />
-        </Route>
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Navigate to="posts" replace />} />
+            <Route path="create" element={<DashboardCreatePage />} />
+            <Route path="new" element={<DashboardCreatePage />} />
+            <Route path="posts" element={<DashboardPostsPage />} />
+            <Route path="settings" element={<DashboardSettingsPage />} />
+            <Route path="edit/:id" element={<EditorPage />} />
+          </Route>
 
-        <Route
-          path="/blogs/new"
-          element={
-            <ProtectedRoute>
-              <Navigate to="/dashboard/create" replace />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/blogs/new"
+            element={
+              <ProtectedRoute>
+                <Navigate to="/dashboard/create" replace />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        <ThemeToggle />
+      </>
     </Router>
   );
 }

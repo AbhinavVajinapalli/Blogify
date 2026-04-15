@@ -32,6 +32,37 @@
   /* Animations */
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Theme variables */
+  --theme-text: #1e293b;
+  --theme-surface: rgba(255, 255, 255, 0.9);
+  --theme-surface-strong: rgba(255, 255, 255, 0.97);
+  --theme-border: rgba(102, 126, 234, 0.2);
+  --theme-overlay: rgba(255, 255, 255, 0.93);
+  --theme-btn-secondary-bg: rgba(255, 255, 255, 0.8);
+  --theme-btn-secondary-text: #334155;
+  --theme-btn-secondary-border: rgba(102, 126, 234, 0.3);
+  --theme-bg-gradient:
+    linear-gradient(125deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+  --theme-float-1: rgba(120, 119, 198, 0.3);
+  --theme-float-2: rgba(236, 72, 153, 0.3);
+  --theme-float-3: rgba(6, 182, 212, 0.2);
+}
+
+[data-theme='dark'] {
+  --theme-text: #e2e8f0;
+  --theme-surface: rgba(15, 23, 42, 0.84);
+  --theme-surface-strong: rgba(2, 6, 23, 0.94);
+  --theme-border: rgba(148, 163, 184, 0.26);
+  --theme-overlay: rgba(2, 6, 23, 0.72);
+  --theme-btn-secondary-bg: rgba(15, 23, 42, 0.84);
+  --theme-btn-secondary-text: #e2e8f0;
+  --theme-btn-secondary-border: rgba(148, 163, 184, 0.32);
+  --theme-bg-gradient:
+    linear-gradient(130deg, #020617 0%, #0f172a 35%, #1e1b4b 70%, #0f172a 100%);
+  --theme-float-1: rgba(99, 102, 241, 0.24);
+  --theme-float-2: rgba(236, 72, 153, 0.2);
+  --theme-float-3: rgba(14, 165, 233, 0.18);
 }
 
 /* Global Styles Override */
@@ -47,9 +78,9 @@
   }
 
   body {
-    @apply text-slate-800 leading-normal antialiased;
-    background: 
-      linear-gradient(125deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+    @apply leading-normal antialiased;
+    color: var(--theme-text);
+    background: var(--theme-bg-gradient);
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
     position: relative;
@@ -65,9 +96,9 @@
     right: 0;
     bottom: 0;
     background: 
-      radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.3), transparent 50%),
-      radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.2), transparent 50%);
+      radial-gradient(circle at 20% 50%, var(--theme-float-1), transparent 50%),
+      radial-gradient(circle at 80% 80%, var(--theme-float-2), transparent 50%),
+      radial-gradient(circle at 40% 20%, var(--theme-float-3), transparent 50%);
     pointer-events: none;
     z-index: 0;
     animation: floatingShapes 20s ease-in-out infinite;
@@ -80,7 +111,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--theme-overlay);
     pointer-events: none;
     z-index: 0;
   }
@@ -153,9 +184,10 @@
     }
 
     &-secondary {
-      @apply border text-slate-700;
-      border-color: rgba(102, 126, 234, 0.3);
-      background: rgba(255, 255, 255, 0.8);
+      @apply border;
+      color: var(--theme-btn-secondary-text);
+      border-color: var(--theme-btn-secondary-border);
+      background: var(--theme-btn-secondary-bg);
       backdrop-filter: blur(10px);
 
       &:hover {
@@ -179,8 +211,8 @@
 
   .card {
     @apply rounded-2xl p-5;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(102, 126, 234, 0.2);
+    background: var(--theme-surface);
+    border: 1px solid var(--theme-border);
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
     backdrop-filter: blur(10px);
     transition: var(--transition-smooth);
@@ -193,8 +225,8 @@
   }
 
   .glass-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+    background: var(--theme-surface);
+    border: 1px solid var(--theme-border);
     backdrop-filter: blur(20px);
     box-shadow: var(--glass-shadow);
     border-radius: 1rem;
@@ -204,6 +236,36 @@
       background: rgba(255, 255, 255, 0.15);
       transform: translateY(-2px);
       box-shadow: 0 12px 40px rgba(31, 38, 135, 0.25);
+    }
+  }
+
+  .theme-toggle {
+    @apply fixed bottom-5 right-5 flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold;
+    color: var(--theme-btn-secondary-text);
+    background: var(--theme-surface-strong);
+    border-color: var(--theme-btn-secondary-border);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.28);
+    backdrop-filter: blur(14px);
+    z-index: 90;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 26px rgba(15, 23, 42, 0.34);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #a855f7;
+      outline-offset: 2px;
+    }
+
+    .theme-toggle-icon {
+      @apply inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      color: #ffffff;
+    }
+
+    .theme-toggle-text {
+      @apply whitespace-nowrap;
     }
   }
 
@@ -437,5 +499,15 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .theme-toggle {
+    @apply bottom-4 right-4 px-3 py-2;
+
+    .theme-toggle-text {
+      @apply hidden;
+    }
   }
 }
