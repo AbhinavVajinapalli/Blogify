@@ -2,6 +2,8 @@ import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/auth/authSlice';
 import Logo from '../common/Logo';
+import ThemeToggle from '../common/ThemeToggle';
+import EffectsToggle from '../common/EffectsToggle';
 import '../../styles/DashboardLayout.scss';
 
 const DashboardLayout = () => {
@@ -42,8 +44,14 @@ const DashboardLayout = () => {
 
       <main className="dashboard-main">
         <header className="dashboard-header">
-          <h1>Dashboard</h1>
-          <p>{user?.name ? `Welcome, ${user.name}` : 'Manage your content'}</p>
+          <div className="dashboard-header-copy">
+            <h1>Dashboard</h1>
+            <p>{user?.name ? `Welcome, ${user.name}` : 'Manage your content'}</p>
+          </div>
+          <div className="dashboard-header-controls">
+            <EffectsToggle className="dashboard-utility-toggle" />
+            <ThemeToggle className="dashboard-utility-toggle" />
+          </div>
         </header>
         <section className="dashboard-content">
           <Outlet />

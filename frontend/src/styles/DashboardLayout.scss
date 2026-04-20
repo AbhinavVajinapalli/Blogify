@@ -113,8 +113,32 @@
     animation: fadeIn 0.6s ease-out;
 
     .dashboard-header {
-      @apply mb-6;
+      @apply mb-6 flex items-start justify-between gap-4;
       animation: slideUp 0.6s ease-out 0.2s both;
+
+      .dashboard-header-copy {
+        @apply min-w-0;
+      }
+
+      .dashboard-header-controls {
+        @apply flex shrink-0 items-center gap-2;
+
+        .dashboard-utility-toggle {
+          @apply static rounded-xl px-3 py-2 text-sm;
+          box-shadow: none;
+          backdrop-filter: blur(10px);
+          border-width: 1px;
+
+          .theme-toggle-text,
+          .effects-toggle-text {
+            @apply inline;
+          }
+
+          &:hover {
+            transform: translateY(-1px);
+          }
+        }
+      }
 
       h1 {
         @apply m-0 mb-2 text-3xl font-bold;
@@ -137,6 +161,14 @@
       backdrop-filter: blur(20px);
       animation: slideUp 0.6s ease-out 0.3s both;
     }
+  }
+}
+
+[data-effects='on'] {
+  .dashboard-layout {
+    background: var(--theme-bg-gradient);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
   }
 }
 
@@ -205,6 +237,23 @@
 
     .dashboard-main {
       @apply px-4 py-6;
+
+      .dashboard-header {
+        @apply flex-col items-stretch;
+
+        .dashboard-header-controls {
+          @apply justify-end;
+
+          .dashboard-utility-toggle {
+            @apply px-2.5;
+
+            .theme-toggle-text,
+            .effects-toggle-text {
+              @apply hidden;
+            }
+          }
+        }
+      }
 
       .dashboard-content {
         @apply p-5;
