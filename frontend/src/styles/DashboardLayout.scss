@@ -1,9 +1,13 @@
 .dashboard-layout {
-  @apply grid min-h-screen grid-cols-[280px_1fr];
+  @apply flex min-h-screen flex-col;
   position: relative;
 
+  .dashboard-container {
+    @apply flex flex-1;
+  }
+
   .dashboard-sidebar {
-    @apply flex flex-col gap-6 p-6;
+    @apply flex w-[280px] flex-col gap-6 p-6;
     background: 
       linear-gradient(135deg, rgba(79, 70, 229, 0.95) 0%, rgba(124, 58, 237, 0.95) 100%);
     border-right: 1px solid rgba(255, 255, 255, 0.1);
@@ -108,7 +112,7 @@
   }
 
   .dashboard-main {
-    @apply px-8 py-8;
+    @apply flex flex-1 flex-col px-8 py-8;
     animation: fadeIn 0.6s ease-out;
 
     .dashboard-header {
@@ -144,7 +148,7 @@
 
 @media (max-width: 900px) {
   .dashboard-layout {
-    @apply grid-cols-1;
+    @apply flex-col;
 
     .dashboard-sidebar {
       @apply sticky top-0 z-50 flex-row items-center overflow-x-auto p-4;

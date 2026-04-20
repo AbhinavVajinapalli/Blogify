@@ -1,0 +1,133 @@
+.footer {
+  @apply mt-20 border-t;
+  background: var(--theme-surface);
+  border-color: var(--theme-border);
+  color: var(--theme-text);
+  margin-top: auto;
+
+  .footer-container {
+    @apply mx-auto max-w-6xl px-7 py-12;
+  }
+
+  .footer-grid {
+    @apply grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4;
+    margin-bottom: 2rem;
+  }
+
+  .footer-section {
+    @apply space-y-4;
+
+    .footer-section-title {
+      @apply text-2xl font-bold;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-section-heading {
+      @apply text-lg font-semibold;
+      color: var(--theme-text);
+    }
+
+    .footer-description {
+      @apply text-sm leading-relaxed;
+      opacity: 0.85;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      @apply space-y-2 list-none;
+
+      li {
+        @apply m-0 p-0;
+
+        a {
+          @apply inline-block py-1 transition-all;
+          color: var(--theme-text);
+          opacity: 0.8;
+
+          &:hover {
+            opacity: 1;
+            transform: translateX(4px);
+          }
+        }
+      }
+    }
+
+    .footer-socials {
+      @apply flex gap-4;
+
+      a {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-full border transition-all;
+        border-color: var(--theme-btn-secondary-border);
+        background: var(--theme-btn-secondary-bg);
+        color: var(--theme-btn-secondary-text);
+        font-weight: bold;
+        font-size: 1.2rem;
+
+        &:hover {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          transform: translateY(-3px);
+        }
+      }
+    }
+  }
+
+  .footer-divider {
+    @apply my-8;
+    background: var(--theme-border);
+    height: 1px;
+  }
+
+  .footer-bottom {
+    @apply space-y-2 text-center text-sm;
+    opacity: 0.75;
+
+    .footer-copyright {
+      @apply m-0 p-0;
+
+      .heart {
+        @apply inline-block;
+        color: #ec4899;
+        animation: pulse-heart 1s ease-in-out infinite;
+      }
+    }
+
+    .footer-theme-indicator {
+      @apply m-0 p-0;
+    }
+  }
+}
+
+@keyframes pulse-heart {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    .footer-container {
+      @apply px-4 py-8;
+    }
+
+    .footer-grid {
+      @apply grid-cols-1;
+    }
+
+    .footer-section {
+      .footer-socials {
+        @apply justify-center;
+      }
+    }
+
+    .footer-bottom {
+      @apply space-y-1 text-xs;
+    }
+  }
+}

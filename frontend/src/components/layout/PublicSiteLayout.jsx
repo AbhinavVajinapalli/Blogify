@@ -2,6 +2,7 @@ import { Link, Outlet, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { blogService } from '../../services/blogService';
 import Logo from '../common/Logo';
+import Footer from './Footer';
 import '../../styles/PublicSiteLayout.scss';
 
 const PublicSiteLayout = () => {
@@ -43,6 +44,7 @@ const PublicSiteLayout = () => {
       <main className="public-site-main">
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 .public-site-layout {
-  @apply min-h-screen bg-gradient-to-b from-slate-50 to-gray-100;
+  @apply flex min-h-screen flex-col bg-gradient-to-b from-slate-50 to-gray-100;
 
   .public-site-header {
     @apply border-b border-slate-700 bg-slate-900 text-white;
@@ -22,7 +22,7 @@
   }
 
   .public-site-main {
-    @apply px-0 py-9;
+    @apply flex-1 px-0 py-9;
   }
 }
 

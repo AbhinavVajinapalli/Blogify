@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/auth/authSlice';
 import Logo from '../common/Logo';
+import Footer from './Footer';
 import '../../styles/DashboardLayout.scss';
 
 const DashboardLayout = () => {
@@ -49,6 +50,7 @@ const DashboardLayout = () => {
           <Outlet />
         </section>
       </main>
+      <Footer />
     </div>
   );
 };
