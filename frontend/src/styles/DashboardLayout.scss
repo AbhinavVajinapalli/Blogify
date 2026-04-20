@@ -1,10 +1,6 @@
 .dashboard-layout {
-  @apply flex min-h-screen flex-col;
+  @apply grid min-h-screen grid-cols-[280px_1fr];
   position: relative;
-
-  .dashboard-container {
-    @apply flex flex-1;
-  }
 
   .dashboard-sidebar {
     @apply flex w-[280px] flex-col gap-6 p-6;
@@ -148,7 +144,7 @@
 
 @media (max-width: 900px) {
   .dashboard-layout {
-    @apply flex-col;
+    @apply grid-cols-1;
 
     .dashboard-sidebar {
       @apply sticky top-0 z-50 flex-row items-center overflow-x-auto p-4;

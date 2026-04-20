@@ -71,6 +71,12 @@
           color: white;
           transform: translateY(-3px);
         }
+
+        svg {
+          width: 1.15rem;
+          height: 1.15rem;
+          fill: currentColor;
+        }
       }
     }
   }
@@ -87,26 +93,7 @@
 
     .footer-copyright {
       @apply m-0 p-0;
-
-      .heart {
-        @apply inline-block;
-        color: #ec4899;
-        animation: pulse-heart 1s ease-in-out infinite;
-      }
     }
-
-    .footer-theme-indicator {
-      @apply m-0 p-0;
-    }
-  }
-}
-
-@keyframes pulse-heart {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
   }
 }
 
