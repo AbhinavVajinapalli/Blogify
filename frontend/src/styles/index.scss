@@ -35,8 +35,10 @@
 
   /* Theme variables */
   --theme-text: #1e293b;
+  --theme-text-secondary: #64748b;
   --theme-surface: rgba(255, 255, 255, 0.95);
   --theme-surface-strong: rgba(255, 255, 255, 0.99);
+  --theme-card-bg: rgba(255, 255, 255, 0.8);
   --theme-border: rgba(102, 126, 234, 0.25);
   --theme-overlay: rgba(255, 255, 255, 0.5);
   --theme-btn-secondary-bg: rgba(255, 255, 255, 0.85);
@@ -53,8 +55,10 @@
 
 [data-theme='dark'] {
   --theme-text: #e2e8f0;
+  --theme-text-secondary: #cbd5e1;
   --theme-surface: rgba(15, 23, 42, 0.9);
   --theme-surface-strong: rgba(2, 6, 23, 0.96);
+  --theme-card-bg: rgba(30, 41, 59, 0.85);
   --theme-border: rgba(148, 163, 184, 0.3);
   --theme-overlay: rgba(2, 6, 23, 0.4);
   --theme-btn-secondary-bg: rgba(30, 41, 59, 0.8);
@@ -67,6 +71,8 @@
   --theme-float-1: rgba(99, 102, 241, 0.15);
   --theme-float-2: rgba(236, 72, 153, 0.12);
   --theme-float-3: rgba(14, 165, 233, 0.1);
+}
+
 /* Global Styles Override */
 @layer base {
   * {
