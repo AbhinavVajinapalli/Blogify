@@ -1,6 +1,7 @@
 .dashboard-layout {
   @apply grid min-h-screen grid-cols-[280px_1fr];
   position: relative;
+  background: var(--theme-page-bg);
 
   .dashboard-sidebar {
     @apply flex w-[280px] flex-col gap-6 p-6;
@@ -117,27 +118,59 @@
 
       h1 {
         @apply m-0 mb-2 text-3xl font-bold;
-        background: linear-gradient(135deg, #1e293b, #4f46e5);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: var(--theme-text);
       }
 
       p {
         @apply m-0 text-base;
-        color: #64748b;
+        color: var(--theme-text-secondary);
       }
     }
 
     .dashboard-content {
       @apply min-h-[75vh] rounded-3xl p-8;
-      background: rgba(255, 255, 255, 0.7);
-      border: 2px solid rgba(102, 126, 234, 0.2);
+      background: var(--theme-card-bg);
+      border: 1px solid var(--theme-border);
       box-shadow: 
-        0 10px 40px rgba(79, 70, 229, 0.1),
-        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+        0 10px 40px rgba(15, 23, 42, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset;
       backdrop-filter: blur(20px);
       animation: slideUp 0.6s ease-out 0.3s both;
+    }
+  }
+}
+
+[data-theme='dark'] {
+  .dashboard-layout {
+    .dashboard-sidebar {
+      background: linear-gradient(180deg, #111b35 0%, #1f2a54 55%, #2a2054 100%);
+      border-right-color: rgba(148, 163, 184, 0.2);
+      box-shadow: 6px 0 28px rgba(2, 6, 23, 0.45);
+
+      .dashboard-nav a {
+        color: rgba(226, 232, 240, 0.88);
+
+        &::before {
+          background: rgba(148, 163, 184, 0.12);
+        }
+
+        &.active {
+          background: rgba(59, 130, 246, 0.22);
+          box-shadow:
+            0 8px 22px rgba(2, 6, 23, 0.3),
+            0 0 0 1px rgba(148, 163, 184, 0.32) inset;
+        }
+      }
+    }
+
+    .dashboard-main {
+      .dashboard-content {
+        background: rgba(15, 23, 42, 0.78);
+        border-color: rgba(148, 163, 184, 0.32);
+        box-shadow:
+          0 14px 36px rgba(2, 6, 23, 0.4),
+          0 0 0 1px rgba(148, 163, 184, 0.14) inset;
+      }
     }
   }
 }

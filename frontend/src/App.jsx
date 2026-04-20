@@ -16,6 +16,7 @@ import DashboardCreatePage from './pages/DashboardCreatePage';
 import DashboardPostsPage from './pages/DashboardPostsPage';
 import DashboardSettingsPage from './pages/DashboardSettingsPage';
 import ThemeToggle from './components/common/ThemeToggle';
+import EffectsToggle from './components/common/EffectsToggle';
 import { authService } from './services/authService';
 import { logout, setCurrentUser } from './features/auth/authSlice';
 
@@ -86,6 +87,7 @@ function App() {
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <EffectsToggle />
         <ThemeToggle />
       </>
     </Router>
