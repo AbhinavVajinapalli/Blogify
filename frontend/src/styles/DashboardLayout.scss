@@ -12,6 +12,20 @@
     box-shadow: 4px 0 24px rgba(79, 70, 229, 0.15);
     position: relative;
     overflow: hidden;
+    transition: width 0.25s ease, transform 0.25s ease;
+
+    .sidebar-expand-btn {
+      @apply ml-auto inline-flex h-9 w-9 items-center justify-center rounded-full border text-lg font-bold;
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(15, 23, 42, 0.25);
+      backdrop-filter: blur(10px);
+
+      &:hover {
+        background: rgba(15, 23, 42, 0.4);
+        transform: scale(1.05);
+      }
+    }
 
     &::before {
       content: '';
@@ -26,7 +40,7 @@
     }
 
     .brand {
-      @apply text-2xl font-bold tracking-tight relative z-10;
+      @apply flex items-center gap-3 text-2xl font-bold tracking-tight relative z-10;
       color: #fff;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       animation: slideInLeft 0.6s ease-out;
@@ -36,11 +50,23 @@
       @apply flex flex-col gap-2 relative z-10;
 
       a {
-        @apply rounded-xl px-4 py-3 font-medium transition-all;
+        @apply flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition-all;
         color: rgba(255, 255, 255, 0.85);
         position: relative;
         overflow: hidden;
         animation: slideInLeft 0.6s ease-out;
+
+        svg,
+        .dashboard-nav-icon {
+          @apply h-5 w-5 shrink-0;
+        }
+
+        .nav-label {
+          @apply whitespace-nowrap;
+          opacity: 1;
+          transition: opacity 0.2s ease, max-width 0.25s ease;
+          max-width: 220px;
+        }
 
         &::before {
           content: '';
@@ -79,6 +105,16 @@
             background: #fff;
             border-radius: 0 4px 4px 0;
           }
+        }
+      }
+
+      .nav-link {
+        @apply flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition-all;
+        color: rgba(255, 255, 255, 0.85);
+
+        &:hover {
+          color: #fff;
+          transform: translateX(4px);
         }
       }
 
@@ -162,6 +198,68 @@
       animation: slideUp 0.6s ease-out 0.3s both;
     }
   }
+
+  .dashboard-sidebar.is-collapsed {
+    width: 96px;
+
+    .brand {
+      @apply justify-center;
+
+      .sidebar-expand-btn {
+        @apply ml-0;
+      }
+    }
+
+    .dashboard-nav {
+      align-items: center;
+
+      a,
+      .nav-link {
+        @apply justify-center px-3;
+
+        .nav-label {
+          opacity: 0;
+          max-width: 0;
+          overflow: hidden;
+          pointer-events: none;
+        }
+      }
+    }
+
+    .logout-btn {
+      @apply px-3;
+      font-size: 0;
+
+      &::after {
+        content: '⎋';
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .dashboard-sidebar.is-collapsed:hover,
+  .dashboard-sidebar.is-expanded {
+    width: 280px;
+
+    .brand {
+      @apply justify-between;
+    }
+
+    .dashboard-nav a .nav-label,
+    .dashboard-nav .nav-link .nav-label {
+      opacity: 1;
+      max-width: 220px;
+      pointer-events: auto;
+    }
+
+    .logout-btn {
+      font-size: 1rem;
+
+      &::after {
+        content: none;
+      }
+    }
+  }
 }
 
 [data-effects='on'] {
@@ -212,10 +310,17 @@
     @apply grid-cols-1;
 
     .dashboard-sidebar {
+      width: 100%;
       @apply sticky top-0 z-50 flex-row items-center overflow-x-auto p-4;
+      align-items: center;
 
       .brand {
         @apply text-lg;
+        flex: 1;
+      }
+
+      .sidebar-expand-btn {
+        display: none;
       }
 
       .dashboard-nav {
@@ -224,14 +329,28 @@
         a {
           @apply whitespace-nowrap px-3 py-2 text-sm;
 
+          .nav-label {
+            opacity: 1 !important;
+            max-width: none !important;
+          }
+
           &.active::after {
             display: none;
           }
+        }
+
+        .nav-link {
+          @apply whitespace-nowrap px-3 py-2 text-sm;
         }
       }
 
       .logout-btn {
         @apply ml-auto mt-0 px-3 py-2 text-sm;
+        font-size: 1rem;
+
+        &::after {
+          content: none;
+        }
       }
     }
 

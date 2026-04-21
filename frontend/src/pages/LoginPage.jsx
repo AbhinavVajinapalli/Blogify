@@ -5,6 +5,8 @@ import { GoogleLogin } from '@react-oauth/google';
 import { setUser } from '../features/auth/authSlice';
 import { authService } from '../services/authService';
 import Logo from '../components/common/Logo';
+import ThemeToggle from '../components/common/ThemeToggle';
+import EffectsToggle from '../components/common/EffectsToggle';
 import '../styles/pages/LoginPage.scss';
 
 const LoginPage = () => {
@@ -66,6 +68,10 @@ const LoginPage = () => {
   return (
     <div className="login-page">
       <div className="login-container">
+        <div className="auth-page-controls">
+          <EffectsToggle className="auth-page-utility-toggle" />
+          <ThemeToggle className="auth-page-utility-toggle" />
+        </div>
         <Link to={brandTarget} className="auth-brand">
           <Logo text="Blogify" />
         </Link>

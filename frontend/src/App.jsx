@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import AppLayout from './components/layout/AppLayout';
@@ -15,17 +15,33 @@ import ProfilePage from './pages/ProfilePage';
 import DashboardCreatePage from './pages/DashboardCreatePage';
 import DashboardPostsPage from './pages/DashboardPostsPage';
 import DashboardSettingsPage from './pages/DashboardSettingsPage';
-import ThemeToggle from './components/common/ThemeToggle';
-import EffectsToggle from './components/common/EffectsToggle';
+import DashboardStatsPage from './pages/DashboardStatsPage';
 import { authService } from './services/authService';
 import { logout, setCurrentUser } from './features/auth/authSlice';
 
-const AppRoutes = () => {
-  const location = useLocation();
-  const isDashboardRoute = location.pathname.startsWith('/dashboard');
+function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const hydrateCurrentUser = async () => {
+      if (!localStorage.getItem('authToken')) {
+        return;
+      }
+
+      try {
+        const user = await authService.getCurrentUser();
+        dispatch(setCurrentUser(user));
+      } catch (error) {
+        console.error('Failed to hydrate current user', error);
+        dispatch(logout());
+      }
+    };
+
+    hydrateCurrentUser();
+  }, [dispatch]);
 
   return (
-    <>
+    <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
@@ -54,6 +70,7 @@ const AppRoutes = () => {
           <Route path="create" element={<DashboardCreatePage />} />
           <Route path="new" element={<DashboardCreatePage />} />
           <Route path="posts" element={<DashboardPostsPage />} />
+          <Route path="stats" element={<DashboardStatsPage />} />
           <Route path="settings" element={<DashboardSettingsPage />} />
           <Route path="edit/:id" element={<EditorPage />} />
         </Route>
@@ -69,36 +86,6 @@ const AppRoutes = () => {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      {!isDashboardRoute && <EffectsToggle />}
-      {!isDashboardRoute && <ThemeToggle />}
-    </>
-  );
-};
-
-function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const hydrateCurrentUser = async () => {
-      if (!localStorage.getItem('authToken')) {
-        return;
-      }
-
-      try {
-        const user = await authService.getCurrentUser();
-        dispatch(setCurrentUser(user));
-      } catch (error) {
-        console.error('Failed to hydrate current user', error);
-        dispatch(logout());
-      }
-    };
-
-    hydrateCurrentUser();
-  }, [dispatch]);
-
-  return (
-    <Router>
-      <AppRoutes />
     </Router>
   );
 }

@@ -11,11 +11,7 @@ const getInitialTheme = () => {
     return savedTheme;
   }
 
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    return 'dark';
-  }
-
-  return 'light';
+  return 'dark';
 };
 
 const getInitialEffects = () => {

@@ -12,6 +12,8 @@ import {
   isStrongPassword,
 } from '../utils/passwordStrength';
 import Logo from '../components/common/Logo';
+import ThemeToggle from '../components/common/ThemeToggle';
+import EffectsToggle from '../components/common/EffectsToggle';
 import '../styles/pages/SignupPage.scss';
 
 const EyeIcon = ({ visible }) => (
@@ -150,6 +152,10 @@ const SignupPage = () => {
   return (
     <div className="signup-page">
       <div className="signup-container">
+        <div className="auth-page-controls">
+          <EffectsToggle className="auth-page-utility-toggle" />
+          <ThemeToggle className="auth-page-utility-toggle" />
+        </div>
         <Link to={brandTarget} className="auth-brand">
           <Logo text="Blogify" />
         </Link>
