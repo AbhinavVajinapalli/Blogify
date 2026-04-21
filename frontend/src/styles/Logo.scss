@@ -1,25 +1,49 @@
 .logo {
-  @apply inline-flex items-center gap-2.5;
+  @apply inline-flex items-center gap-3;
 
   .logo-mark {
-    @apply inline-flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-br from-sky-500 to-blue-600 text-white shadow-lg;
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-xl text-white;
+    background: linear-gradient(140deg, #06b6d4 0%, #4f46e5 55%, #9333ea 100%);
+    box-shadow: 0 10px 24px rgba(79, 70, 229, 0.28);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      pointer-events: none;
+    }
 
     svg {
-      @apply h-4 w-4;
+      @apply h-5 w-5;
     }
   }
 
   .logo-text {
-    @apply font-bold tracking-wide;
+    @apply font-bold;
+    letter-spacing: 0.01em;
+    color: #312e81;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  &.logo-icon-only {
+    @apply gap-0;
+
+    .logo-text {
+      display: none;
+    }
   }
 }
 
 .logo-light {
   .logo-mark {
-    @apply shadow-none;
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.35);
   }
 
   .logo-text {
     @apply text-white;
+    text-shadow: none;
   }
 }

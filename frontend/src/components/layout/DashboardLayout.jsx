@@ -8,6 +8,23 @@ import ThemeToggle from '../common/ThemeToggle';
 import EffectsToggle from '../common/EffectsToggle';
 import '../../styles/DashboardLayout.scss';
 
+const MenuToggleIcon = ({ expanded }) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    {expanded ? (
+      <path
+        d="M6.7 5.3 12 10.6l5.3-5.3 1.4 1.4L13.4 12l5.3 5.3-1.4 1.4L12 13.4l-5.3 5.3-1.4-1.4L10.6 12 5.3 6.7Z"
+        fill="currentColor"
+      />
+    ) : (
+      <path d="M4 6h16v2H4V6Zm0 5h16v2H4v-2Zm0 5h16v2H4v-2Z" fill="currentColor" />
+    )}
+  </svg>
+);
+
+MenuToggleIcon.propTypes = {
+  expanded: PropTypes.bool.isRequired,
+};
+
 const CreateIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
     <path d="M13 4h7v2h-7V4Zm0 14h7v2h-7v-2ZM4 12l7-7v4h9v6h-9v4l-7-7Z" fill="currentColor" />
@@ -47,12 +64,6 @@ const SettingsIcon = () => (
   </svg>
 );
 
-const ExpandIcon = ({ expanded }) => <span aria-hidden="true">{expanded ? '‹' : '›'}</span>;
-
-ExpandIcon.propTypes = {
-  expanded: PropTypes.bool.isRequired,
-};
-
 const navItems = [
   { to: '/dashboard/create', label: 'Create New Post', icon: <CreateIcon /> },
   { to: '/dashboard/posts', label: 'Posts', icon: <PostsIcon /> },
@@ -77,13 +88,9 @@ const DashboardLayout = () => {
 
   return (
     <div className="dashboard-layout">
-      <aside
-        className={`dashboard-sidebar ${isExpanded ? 'is-expanded' : 'is-collapsed'}`}
-        onMouseEnter={() => setIsSidebarExpanded(true)}
-        onMouseLeave={() => setIsSidebarExpanded(false)}
-      >
+      <aside className={`dashboard-sidebar ${isExpanded ? 'is-expanded' : 'is-collapsed'}`}>
         <div className="brand">
-          <Logo text="Blogify" light />
+          <Logo text="Blogify" light iconOnly={!isExpanded} />
           <button
             type="button"
             className="sidebar-expand-btn"
@@ -91,7 +98,7 @@ const DashboardLayout = () => {
             aria-label={isExpanded ? 'Collapse navigation' : 'Expand navigation'}
             aria-pressed={isExpanded}
           >
-            <ExpandIcon expanded={isExpanded} />
+            <MenuToggleIcon expanded={isExpanded} />
           </button>
         </div>
         <nav className="dashboard-nav">
