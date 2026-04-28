@@ -1,13 +1,41 @@
-.editor-page {
-  .container {
-    @apply mx-auto max-w-4xl px-5;
+.editor-page-container {
+  @apply flex min-h-screen bg-gray-50;
+}
+
+.editor-main-content {
+  @apply min-w-0 flex-1 overflow-y-auto pr-64;
+}
+
+.editor-header {
+  @apply sticky top-0 z-40 flex items-start justify-between gap-6 border-b border-gray-200 bg-white px-6 py-4 shadow-sm;
+
+  .editor-logo {
+    @apply inline-block rounded-full bg-amber-50 px-3 py-2 text-sm font-semibold text-emerald-700 transition-colors hover:bg-amber-100;
+  }
+
+  .editor-kicker {
+    @apply mb-1 text-xs font-semibold uppercase tracking-[0.24em] text-gray-500;
   }
 
   h1 {
-    @apply mb-7 text-gray-900;
+    @apply text-2xl font-bold text-gray-900;
   }
+}
 
-  .error {
-    @apply mb-5 rounded bg-red-100 px-3 py-3 text-sm text-red-600;
+.editor-wrapper {
+  @apply max-w-4xl px-6 py-8;
+}
+
+.error-message {
+  @apply mb-5 rounded-lg border-l-4 border-red-500 bg-red-50 px-4 py-3 text-sm text-red-700;
+}
+
+.loading {
+  @apply flex h-screen items-center justify-center text-xl text-gray-600;
+}
+
+@media (max-width: 1024px) {
+  .editor-main-content {
+    @apply pr-0;
   }
 }

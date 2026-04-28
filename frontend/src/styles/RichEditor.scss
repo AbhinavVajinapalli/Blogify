@@ -1,0 +1,101 @@
+.rich-editor {
+  @apply mb-5;
+
+  :global(.ql-container) {
+    @apply rounded-lg border border-slate-300;
+    font-size: 1rem;
+
+    .ql-editor {
+      @apply min-h-96 px-4 py-3;
+
+      &.ql-blank::before {
+        @apply text-slate-400;
+        font-style: normal;
+      }
+
+      &:focus {
+        @apply outline-none ring-2 ring-emerald-100;
+      }
+    }
+  }
+
+  :global(.ql-toolbar) {
+    @apply rounded-t-lg border border-slate-300 border-b-0 bg-gray-50;
+
+    .ql-stroke {
+      @apply stroke-gray-600;
+    }
+
+    .ql-fill,
+    .ql-stroke.ql-fill {
+      @apply fill-gray-600;
+    }
+
+    .ql-picker-label {
+      @apply text-gray-600;
+    }
+
+    button:hover,
+    button:focus,
+    button.ql-active,
+    .ql-picker-label:hover,
+    .ql-picker-label.ql-active,
+    .ql-picker-item:hover,
+    .ql-picker-item.ql-selected {
+      @apply text-emerald-600;
+
+      .ql-stroke {
+        @apply stroke-emerald-600;
+      }
+
+      .ql-fill,
+      .ql-stroke.ql-fill {
+        @apply fill-emerald-600;
+      }
+    }
+  }
+
+  :global(.ql-editor) {
+    h1, h2, h3, h4, h5, h6 {
+      @apply font-bold;
+    }
+
+    h1 {
+      @apply mb-4 text-2xl;
+    }
+
+    h2 {
+      @apply mb-3 text-xl;
+    }
+
+    h3 {
+      @apply mb-2 text-lg;
+    }
+
+    blockquote {
+      @apply border-l-4 border-emerald-600 px-4 py-2 italic text-gray-600;
+    }
+
+    code {
+      @apply rounded bg-gray-100 px-1 py-0.5 font-mono text-sm;
+    }
+
+    pre {
+      @apply rounded bg-gray-100 p-3 font-mono;
+      overflow-x: auto;
+    }
+
+    img {
+      @apply max-w-full rounded;
+      margin: 1rem 0;
+    }
+
+    a {
+      @apply text-emerald-600 underline;
+
+      &:hover {
+        @apply text-emerald-700;
+      }
+    }
+  }
+}
